@@ -5,8 +5,8 @@ services:
     image: node:20-alpine
     container_name: frontend
     volumes:
-      - ./frontend:/srv/frontend
-    working_dir: /srv/frontend
+      - ./frontend:/app/frontend
+    working_dir: /app/frontend
     command: sh -c "npm install && npm run dev"
     ports:
       - "5173:5173"
@@ -19,8 +19,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     volumes:
-      - ./backend:/srv/backend
-    working_dir: /srv/backend/troc_graines_backend
+      - ./backend:/app/backend
+    working_dir: /app/backend
     ports:
       - "8000:8000"
     secrets:
@@ -37,7 +37,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./backend/troc_graines_backend/public:/srv/backend/troc_graines_backend/public
+      - ./backend/public:/app/backend/public
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - backend
@@ -57,7 +57,7 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
       POSTGRES_DB_FILE: /run/secrets/db_name
     volumes:
-      - ./backend/data:/var/lib/postgresql/data
+      - ./postgresql/data:/var/lib/postgresql/data
 
   adminer:
     image: dockette/adminer
