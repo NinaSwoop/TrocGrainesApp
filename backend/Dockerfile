@@ -17,5 +17,7 @@ RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
 RUN curl -sS https://get.symfony.com/cli/installer | bash \
     && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
 
+EXPOSE 9000
+
 WORKDIR /app/backend
 CMD ["php-fpm"]

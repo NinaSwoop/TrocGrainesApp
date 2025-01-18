@@ -23,6 +23,7 @@ services:
     working_dir: /app/backend
     ports:
       - "8000:8000"
+    # command: symfony server:start --no-tls --port=8000 --listen-ip=0.0.0.0
     secrets:
       - db_url
     environment:
@@ -36,6 +37,7 @@ services:
     restart: always
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./backend/public:/app/backend/public
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
