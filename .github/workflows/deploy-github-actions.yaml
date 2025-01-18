@@ -22,7 +22,7 @@ jobs:
         run: |
           cd frontend
           npm install
-          cd backend
+          cd /backend
           composer install
 
       - name: Run tests
