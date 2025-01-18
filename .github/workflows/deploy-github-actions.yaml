@@ -38,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./compose.yaml
+          file: ./compose.production.yaml
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/TrocGrainesApp:latest
 
@@ -49,4 +49,4 @@ jobs:
           username: ${{ secrets.SERVER_HOST_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            docker-compose -f /home/ubuntu/TrocGrainesApp/compose.yaml up -d
+            docker compose -f /home/ubuntu/TrocGrainesApp/compose.production.yaml up -d
