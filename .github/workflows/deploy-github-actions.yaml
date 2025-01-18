@@ -39,10 +39,10 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: .
-          file: ./compose.production.yaml
+          context: ./backend
+          file: ./backend/production.Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/trocgrainesapp:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/trocgrainesapp_backend:latest
 
       - name: SSH to VPS
         uses: appleboy/ssh-action@master
