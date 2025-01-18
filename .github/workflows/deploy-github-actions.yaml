@@ -42,7 +42,7 @@ jobs:
           context: .
           file: ./compose.production.yaml
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/TrocGrainesApp:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/trocgrainesapp:latest
 
       - name: SSH to VPS
         uses: appleboy/ssh-action@master
