@@ -27,6 +27,7 @@ jobs:
 
       - name: Run tests
         run: |
+          cd backend
           ./vendor/bin/phpunit tests
 
       - name: Login to DockerHub
