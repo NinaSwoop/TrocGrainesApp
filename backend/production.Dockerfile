@@ -16,13 +16,10 @@ RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
 
 COPY . /app/backend
 
-RUN ls -la /app/backend
-
-RUN cat /app/backend/composer.json
+WORKDIR /app/backend
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
 
 EXPOSE 9000
 
-WORKDIR /app/backend
 CMD ["php-fpm"]
