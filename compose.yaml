@@ -1,5 +1,3 @@
-name: Troc_graines_app
-
 services:
   frontend:
     image: node:20-alpine
