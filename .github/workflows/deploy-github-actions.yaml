@@ -53,10 +53,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 59650
           script: |
+            echo "Début de la connexion SSH"
             # Vérifier l'état du serveur
             echo "Vérification de l'état du serveur"
             docker ps -a
-
+            
             # Vérifier si le fichier compose.production.yaml existe
             if [ -f /home/ubuntu/TrocGrainesApp/compose.production.yaml ]; then
               echo "Le fichier compose.production.yaml existe"
@@ -64,6 +65,8 @@ jobs:
               echo "Le fichier compose.production.yaml est manquant"
               exit 1
             fi
-
-            # Lancer les conteneurs avec Docker Compose
-            docker compose -f /home/ubuntu/TrocGrainesApp/compose.production.yaml up -d
+            
+            # Lancer les conteneurs avec Docker Compose sans utiliser le cache
+            echo "Lancement des conteneurs avec Docker Compose"
+            docker compose -f /home/ubuntu/TrocGrainesApp/compose.production.yaml up --build --no-cache -d
+            echo "Fin de la connexion SSH"
