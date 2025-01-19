@@ -15,6 +15,10 @@ class User
     private DateTime $createdAt;
     private DateTime $updatedAt;
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
     public function getUsername(): string
     {
         return $this->username;
