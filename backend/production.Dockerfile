@@ -19,6 +19,8 @@ WORKDIR /app/backend
 COPY ./composer.json /app/backend/composer.json
 COPY . /app/backend
 
+RUN ls -al /app/backend
+
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
 
