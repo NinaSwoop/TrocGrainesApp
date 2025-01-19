@@ -14,7 +14,7 @@ RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
     && echo "short_open_tag = Off" >> /usr/local/etc/php/php.ini \
     && echo "memory_limit = 512M" >> /usr/local/etc/php/php.ini
 
-COPY backend /app/backend
+COPY . /app/backend
 
 WORKDIR /app/backend
 
