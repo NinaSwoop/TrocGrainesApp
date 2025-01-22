@@ -1,5 +1,7 @@
 <?php
 
+use App\Domain\ValueObject\PointBalance;
+
 class User
 {
     private int $id;
@@ -10,7 +12,7 @@ class User
     private DateTime $birthdate;
     private string $picture;
     private string $password;
-    private int $pointBalance;
+    private PointBalance $pointBalance;
     private string $role;
     private DateTime $createdAt;
     private DateTime $updatedAt;
@@ -89,15 +91,7 @@ class User
         $this->password = $password;
     }
 
-    public function getPointBalance(): int
-    {
-        return $this->pointBalance;
-    }
 
-    public function setPointBalance(int $pointBalance): void
-    {
-        $this->pointBalance = $pointBalance;
-    }
 
     public function getRole(): string
     {

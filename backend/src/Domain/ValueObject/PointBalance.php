@@ -6,8 +6,9 @@ class PointBalance
 {
     private int $points;
     public const int TRANSACTION_POINT = 1;
+    public const int DEFAULT_POINTS = 3;
 
-    public function __construct(int $points)
+    public function __construct(int $points = self::DEFAULT_POINTS)
     {
         if ($points < 0) {
             throw new \InvalidArgumentException('Le solde de points ne peut pas être négatif.');
@@ -20,24 +21,22 @@ class PointBalance
         return $this->points;
     }
 
-    public function add(): self
+    public function add(): PointBalance
     {
-        return new self($this->points + self::TRANSACTION_POINT);
+        return new PointBalance($this->points + self::TRANSACTION_POINT);
     }
 
-    public function subtract(): self
+    public function subtract(): PointBalance
     {
-        if ($this->hasSufficientBalance()) {
-            return new self($this->points - self::TRANSACTION_POINT);
+        if (!$this->hasFundsAvailable(self::TRANSACTION_POINT)) {
+            throw new \InvalidArgumentException('Le solde de points est insuffisant pour cette transaction.');
         }
-        return $this;
+
+        return new PointBalance($this->points - self::TRANSACTION_POINT);
     }
 
-    public function hasSufficientBalance(): bool
+    public function hasFundsAvailable(int $points): bool
     {
-        if ($this->points <= 0) {
-            throw new \InvalidArgumentException('Le solde de points ne peut pas être négatif.');
-        }
-        return true;
+        return $this->points >= $points;
     }
 }

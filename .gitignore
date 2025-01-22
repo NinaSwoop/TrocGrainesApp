@@ -2,3 +2,4 @@ secrets
 postgresql/data
 .idea
 .env.*
+.php-cs-fixer.cache
