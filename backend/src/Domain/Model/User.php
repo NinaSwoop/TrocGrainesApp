@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Domain\Model;
+
 use App\Domain\ValueObject\PointBalance;
 
 class User
@@ -91,7 +93,9 @@ class User
         $this->password = $password;
     }
 
+    public function earnPoints() : void {
 
+    }
 
     public function getRole(): string
     {

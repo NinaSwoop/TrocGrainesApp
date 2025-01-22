@@ -5,6 +5,8 @@ namespace App\Domain\ValueObject;
 class PointBalance
 {
     private int $points;
+
+    // Déplacer dans le modèl avec enum
     public const int TRANSACTION_POINT = 1;
     public const int DEFAULT_POINTS = 3;
 
