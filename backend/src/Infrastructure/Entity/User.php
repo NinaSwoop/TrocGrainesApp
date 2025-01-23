@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Entity;
 
-use App\Repository\UserRepository;
+use App\Infrastructure\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,7 +15,7 @@ class User
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $username = null;
 
     #[ORM\Column(length: 255)]
@@ -24,7 +24,7 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -36,8 +36,11 @@ class User
     #[ORM\Column(type: Types::TEXT)]
     private ?string $password = null;
 
-    #[ORM\Column]
+    #[ORM\Column(options: ["default" => 3])]
     private ?int $point_balance = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $role = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -151,6 +154,16 @@ class User
         $this->point_balance = $point_balance;
 
         return $this;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(?string $role): void
+    {
+        $this->role = $role;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
