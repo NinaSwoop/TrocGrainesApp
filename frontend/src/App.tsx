@@ -10,7 +10,7 @@ function App() {
     return (
     <>
         <Navbar />
-        <main>
+        <main className="pt-16 flex justify-center">
             <Routes>
                 <Route path="/" element={<Home />} />
             </Routes>
