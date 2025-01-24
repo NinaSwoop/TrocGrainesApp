@@ -1,5 +1,5 @@
-import logo from "../../assets/logo.svg";
-import user from "../../assets/user.svg";
+import logo from "../assets/logo.svg";
+import user from "../assets/user.svg";
 const Navbar = () => {
     return (
         <nav className="w-full fixed top-0 flex flex-col sm:flex-row justify-between items-center bg-beige p-4 z-50">

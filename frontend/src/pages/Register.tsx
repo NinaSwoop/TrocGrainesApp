@@ -1,18 +1,21 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-// import Error from '../../components/Error/Error.js';
+import { useNavigate } from 'react-router-dom';
+import Error from '../components/Error.tsx';
 import Button from "../components/Button.tsx";
 import Input from "../components/Input.tsx";
 import UploadImageZone from '../components/UploadImageZone.tsx';
-// import { AuthContext } from '../../context/auth-context.js';
+// import { AuthContext } from '../context/AuthContext.tsx';
 
 export default function RegistrationPage() {
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
+    const [lastname, setLastname] = useState('');
+    const [firstname, setFirstname] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [birthdate, setBirthdate] = useState('');
     const [picture, setPicture] = useState<File | null>(null);
-    // const [error, setError] = useState<string | null>(null);
-    // const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [error, setError] = useState<string | null>(null);
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
     // const { register } = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -21,19 +24,23 @@ export default function RegistrationPage() {
         const newErrors: any = {};
         const nameRegex = /^[a-zA-Z\s-]+$/;
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const birthdateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
-
-        if (name && !nameRegex.test(name)) {
+        if ((username && !nameRegex.test(username)) ||
+            (lastname && !nameRegex.test(lastname)) ||
+            (firstname && !nameRegex.test(firstname))) {
             newErrors.nameRegex = 'Le nom ne doit contenir que des lettres, des espaces ou des tirets';
             valid = false;
         }
 
-        if (name && name.length < 2 || name.length > 50) {
+        if ((username && username.length < 2 || username.length > 50) ||
+            (lastname && lastname.length < 2 || lastname.length > 50) ||
+            (firstname && firstname.length < 2 || firstname.length > 50)) {
             newErrors.nameLength = 'Le nom doit contenir entre 2 et 50 caractères';
             valid = false;
         }
 
-        if (!name) {
+        if (!username || !lastname || !firstname) {
             newErrors.name = 'Veuillez entrer un nom';
             valid = false;
         }
@@ -61,6 +68,7 @@ export default function RegistrationPage() {
         if(picture) {
             switch(picture.type) {
                 case 'image/jpeg':
+                case 'image/jpg':
                 case 'image/png' :
                 case 'image/webp':
                 case 'image/svg+xml':
@@ -86,7 +94,7 @@ export default function RegistrationPage() {
 
         try {
             const role_id = 2;
-            const user = await register(name, email, password, picture, role_id);
+            const user = await register(username, firstname, lastname, email, password, birthdate, picture, role_id);
 
             if (!user) {
                 setError('Ce profil possède déjà un compte.');
@@ -116,28 +124,28 @@ export default function RegistrationPage() {
                                 label="Nom d'utilisateur"
                                 type="text"
                                 placeholder="Votre nom d'utilisateur"
-                                value={name}
-                                onChange={setName}
+                                value={username}
+                                onChange={setUsername}
                                 required={true}
                                 aria-describedby="username"
                             />
-                            {/*{errors.name && <Error title="Erreur" text={errors.name} />}*/}
-                            {/*{errors.nameRegex && <Error title="Erreur" text={errors.nameRegex} />}*/}
-                            {/*{errors.nameLength && <Error title="Erreur" text={errors.nameLength} />}*/}
+                            {errors.name && <Error title="Erreur" text={errors.username} />}
+                            {errors.nameRegex && <Error title="Erreur" text={errors.nameRegex} />}
+                            {errors.nameLength && <Error title="Erreur" text={errors.nameLength} />}
                         </div>
                         <div className="mb-4">
                             <Input
                                 label="Nom"
                                 type="text"
                                 placeholder="Votre nom"
-                                value={name}
-                                onChange={setName}
+                                value={lastname}
+                                onChange={setLastname}
                                 required={true}
                                 aria-describedby="lastname"
                             />
-                            {/*{errors.name && <Error title="Erreur" text={errors.name} />}*/}
-                            {/*{errors.nameRegex && <Error title="Erreur" text={errors.nameRegex} />}*/}
-                            {/*{errors.nameLength && <Error title="Erreur" text={errors.nameLength} />}*/}
+                            {errors.name && <Error title="Erreur" text={errors.name} />}
+                            {errors.nameRegex && <Error title="Erreur" text={errors.nameRegex} />}
+                            {errors.nameLength && <Error title="Erreur" text={errors.nameLength} />}
                         </div>
                     </div>
                     <div className="columns-2">
@@ -146,14 +154,14 @@ export default function RegistrationPage() {
                                 label="Prénom"
                                 type="text"
                                 placeholder="Votre prénom"
-                                value={name}
-                                onChange={setName}
+                                value={firstname}
+                                onChange={setFirstname}
                                 required={true}
                                 aria-describedby="firstname"
                             />
-                            {/*{errors.name && <Error title="Erreur" text={errors.name} />}*/}
-                            {/*{errors.nameRegex && <Error title="Erreur" text={errors.nameRegex} />}*/}
-                            {/*{errors.nameLength && <Error title="Erreur" text={errors.nameLength} />}*/}
+                            {errors.name && <Error title="Erreur" text={errors.name} />}
+                            {errors.nameRegex && <Error title="Erreur" text={errors.nameRegex} />}
+                            {errors.nameLength && <Error title="Erreur" text={errors.nameLength} />}
                         </div>
                         <div className="mb-4">
                             <Input
@@ -165,8 +173,8 @@ export default function RegistrationPage() {
                                 required={true}
                                 aria-describedby="email"
                             />
-                            {/*{errors.email && <Error title="Erreur" text={errors.email} />}*/}
-                            {/*{errors.emailNotComplete && <Error title="Erreur" text={errors.emailNotComplete} />}*/}
+                            {errors.email && <Error title="Erreur" text={errors.email} />}
+                            {errors.emailNotComplete && <Error title="Erreur" text={errors.emailNotComplete} />}
                         </div>
                     </div>
                         <div className="mb-4">
@@ -179,21 +187,21 @@ export default function RegistrationPage() {
                                 required={true}
                                 aria-describedby="password"
                             />
-                            {/*{errors.password && <Error title="Erreur" text={errors.password} />}*/}
-                            {/*{errors.passwordLength && <Error title="Erreur" text={errors.passwordLength} />}*/}
+                            {errors.password && <Error title="Erreur" text={errors.password} />}
+                            {errors.passwordLength && <Error title="Erreur" text={errors.passwordLength} />}
                         </div>
                         <div className="mb-4">
                             <Input
                                 label="Date de naissance"
                                 type="date"
-                                value={password}
-                                onChange={setPassword}
+                                value={birthdate}
+                                onChange={setBirthdate}
                                 required={true}
                                 placeholder="Votre date de naissance"
                                 aria-describedby="birthdate"
                             />
-                            {/*{errors.password && <Error title="Erreur" text={errors.password} />}*/}
-                            {/*{errors.passwordLength && <Error title="Erreur" text={errors.passwordLength} />}*/}
+                            {errors.password && <Error title="Erreur" text={errors.password} />}
+                            {errors.passwordLength && <Error title="Erreur" text={errors.passwordLength} />}
                         </div>
                         <div className="mb-4">
                             <label
@@ -212,7 +220,7 @@ export default function RegistrationPage() {
                                 value={picture}
                                 aria-describedby="picture"
                             />
-                            {/*{errors.pictureType && <Error title="Erreur" text={errors.pictureType} />}*/}
+                            {errors.pictureType && <Error title="Erreur" text={errors.pictureType} />}
                         </div>
                         <div className="mt-5 mb-5">
                             <a href="/login"
@@ -220,7 +228,7 @@ export default function RegistrationPage() {
                                 Déjà inscrit ? Connectez-vous
                             </a>
                         </div>
-                        {/*{error && <Error title="Erreur" text={error} />}*/}
+                        {error && <Error title="Erreur" text={error} />}
                         <div className="flex items-center justify-center">
                             <Button
                                 text="Inscription"
