@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -11,6 +12,12 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
+    private UserRepositoryInterface $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
     /**
      * Symfony calls this method if you use features like switch_user
      * or remember_me.
@@ -22,19 +29,13 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
      */
     public function loadUserByIdentifier($identifier): UserInterface
     {
-        // Load a User object from your data source or throw UserNotFoundException.
-        // The $identifier argument may not actually be a username:
-        // it is whatever value is being returned by the getUserIdentifier()
-        // method in your User class.
-        throw new \Exception('TODO: fill in loadUserByIdentifier() inside '.__FILE__);
-    }
+        $domainUser = $this->userRepository->findByEmail($identifier);
 
-    /**
-     * @deprecated since Symfony 5.3, loadUserByIdentifier() is used instead
-     */
-    public function loadUserByUsername($username): UserInterface
-    {
-        return $this->loadUserByIdentifier($username);
+        if (!$domainUser) {
+            throw new UserNotFoundException(sprintf('Utilisateur avec l\'identifiant "%s" non trouvé.', $identifier));
+        }
+
+        return new SymfonyUser($domainUser);
     }
 
     /**
@@ -72,8 +73,15 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-        // TODO: when hashed passwords are in use, this method should:
-        // 1. persist the new password in the user storage
-        // 2. update the $user object with $user->setPassword($newHashedPassword);
+
+        if (!$user instanceof SymfonyUser) {
+            throw new UnsupportedUserException(sprintf('Classe utilisateur non prise en charge pour mise à jour de mot de passe : "%s".', get_class($user)));
+        }
+
+        // Mise à jour du mot de passe de l'utilisateur métier
+        $domainUser = $user->getDomainUser();
+        $domainUser->setPassword($newHashedPassword);
+
+        $this->userRepository->save($domainUser);
     }
 }
