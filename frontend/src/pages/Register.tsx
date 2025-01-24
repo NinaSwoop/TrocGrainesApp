@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Error from '../components/Error.tsx';
 import Button from "../components/Button.tsx";
@@ -65,6 +65,11 @@ export default function RegistrationPage() {
             valid = false;
         }
 
+        if (birthdate && !birthdateRegex.test(birthdate)) {
+            newErrors.birthdate = "La date de naissance n'est pas valide";
+            valid = false;
+        }
+
         if(picture) {
             switch(picture.type) {
                 case 'image/jpeg':
@@ -92,19 +97,19 @@ export default function RegistrationPage() {
             return;
         }
 
-        try {
-            const role_id = 2;
-            const user = await register(username, firstname, lastname, email, password, birthdate, picture, role_id);
-
-            if (!user) {
-                setError('Ce profil possède déjà un compte.');
-            } else {
-                navigate('/login');
-            }
-        } catch (error) {
-            setError('Erreur lors de la connexion');
-            console.error('Erreur lors de la connexion:', error);
-        }
+        // try {
+        //     const role_id = 2;
+        //     const user = await register(username, firstname, lastname, email, password, birthdate, picture, role_id);
+        //
+        //     if (!user) {
+        //         setError('Ce profil possède déjà un compte.');
+        //     } else {
+        //         navigate('/login');
+        //     }
+        // } catch (error) {
+        //     setError('Erreur lors de la connexion');
+        //     console.error('Erreur lors de la connexion:', error);
+        // }
     };
 
     const handlePictureChange = (file: File | null) => {
