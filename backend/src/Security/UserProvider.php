@@ -2,7 +2,6 @@
 
 namespace App\Security;
 
-use App\Domain\Model\User;
 use App\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
