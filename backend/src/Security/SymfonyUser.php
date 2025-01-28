@@ -50,7 +50,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
 
-    public function getId(): ?int
+    public function id(): ?int
     {
         return $this->id;
     }
@@ -62,7 +62,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUsername(): ?string
+    public function username(): ?string
     {
         return $this->username;
     }
@@ -74,7 +74,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getFirstname(): ?string
+    public function firstname(): ?string
     {
         return $this->firstname;
     }
@@ -86,7 +86,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getLastname(): ?string
+    public function lastname(): ?string
     {
         return $this->lastname;
     }
@@ -98,7 +98,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getEmail(): ?string
+    public function email(): ?string
     {
         return $this->email;
     }
@@ -110,7 +110,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBirthdate(): ?\DateTimeInterface
+    public function birthdate(): ?\DateTimeInterface
     {
         return $this->birthdate;
     }
@@ -122,7 +122,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPicture(): ?string
+    public function picture(): ?string
     {
         return $this->picture;
     }
@@ -146,7 +146,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPointBalance(): ?int
+    public function pointBalance(): ?int
     {
         return $this->point_balance;
     }
@@ -154,30 +154,6 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPointBalance(int $point_balance): self
     {
         $this->point_balance = $point_balance;
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(?\DateTimeImmutable $updated_at): self
-    {
-        $this->updated_at = $updated_at;
 
         return $this;
     }
@@ -191,9 +167,33 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRole(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function createdAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function updatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updated_at): self
+    {
+        $this->updated_at = $updated_at;
 
         return $this;
     }

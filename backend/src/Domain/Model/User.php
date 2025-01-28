@@ -4,6 +4,8 @@ namespace App\Domain\Model;
 
 use App\Domain\ValueObject\PointBalance;
 
+use DateTime;
+
 class User
 {
     private int $id;
@@ -15,116 +17,97 @@ class User
     private string $picture;
     private string $password;
     private PointBalance $pointBalance;
-    private string $role;
+    private TransactionRole $transactionRole;
     private DateTime $createdAt;
     private DateTime $updatedAt;
 
-    public function getId(): int
+    public function __construct(
+        int $id,
+        string $username,
+        string $firstname,
+        string $lastname,
+        string $email,
+        DateTime $birthdate,
+        string $picture,
+        string $password,
+        PointBalance $pointBalance,
+        DateTime $createdAt,
+        DateTime $updatedAt
+    ) {
+        $this->id = $id;
+        $this->username = $username;
+        $this->firstname = $firstname;
+        $this->lastname = $lastname;
+        $this->email = $email;
+        $this->birthdate = $birthdate;
+        $this->picture = $picture;
+        $this->password = $password;
+        $this->pointBalance = $pointBalance;
+        $this->createdAt = $createdAt;
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function id(): int
     {
         return $this->id;
     }
-    public function getUsername(): string
+    public function username(): string
     {
         return $this->username;
     }
 
-    public function setUsername(string $username): void
-    {
-        $this->username = $username;
-    }
-
-    public function getFirstname(): string
+    public function firstname(): string
     {
         return $this->firstname;
     }
 
-    public function setFirstname(string $firstname): void
-    {
-        $this->firstname = $firstname;
-    }
-
-    public function getLastname(): string
+    public function lastname(): string
     {
         return $this->lastname;
     }
 
-    public function setLastname(string $lastname): void
-    {
-        $this->lastname = $lastname;
-    }
-
-    public function getEmail(): string
+    public function email(): string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
-    }
-
-    public function getBirthdate(): DateTime
+    public function birthdate(): DateTime
     {
         return $this->birthdate;
     }
 
-    public function setBirthdate(DateTime $birthdate): void
-    {
-        $this->birthdate = $birthdate;
-    }
-
-    public function getPicture(): string
+    public function picture(): string
     {
         return $this->picture;
     }
 
-    public function setPicture(string $picture): void
-    {
-        $this->picture = $picture;
-    }
-
-    public function getPassword(): string
+    public function password(): string
     {
         return $this->password;
     }
 
-    public function setPassword(string $password): void
+    public function pointBalance(): PointBalance
     {
-        $this->password = $password;
+        return $this->pointBalance;
     }
 
-    public function earnPoints() : void {
-
-    }
-
-    public function getRole(): string
+    public function transactionRole(): TransactionRole
     {
-        return $this->role;
+        return $this->transactionRole;
     }
 
-    public function setRole(string $role): void
-    {
-        $this->role = $role;
-    }
-
-    public function getCreatedAt(): DateTime
+    public function createdAt(): DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    public function getUpdatedAt(): DateTime
+    public function updatedAt(): DateTime
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(DateTime $updatedAt): void
-    {
-        $this->updatedAt = $updatedAt;
-    }
+//    public function earnPoints() : void {
+//
+//    }
 
 }

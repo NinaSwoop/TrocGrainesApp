@@ -15,7 +15,7 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, User::class);
+        parent::__construct($registry, SymfonyUser::class);
     }
 
     //    /**
@@ -42,9 +42,25 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
     //            ->getOneOrNullResult()
     //        ;
     //    }
-    public function register(User $user): void
+
+    public function add(User $user): void
     {
-        // TODO: Implement register() method.
+        $symfonyUser = new SymfonyUser();
+        $symfonyUser->setId($user->id());
+        $symfonyUser->setUsername($user->username());
+        $symfonyUser->setFirstname($user->firstname());
+        $symfonyUser->setLastname($user->lastname());
+        $symfonyUser->setEmail($user->email());
+        $symfonyUser->setBirthdate($user->birthdate());
+        $symfonyUser->setPicture($user->picture());
+        $symfonyUser->setPassword($user->password());
+        $symfonyUser->setPointBalance(3);
+        $symfonyUser->setRole($symfonyUser->getRoles());
+        $symfonyUser->setCreatedAt(new \DateTimeImmutable());
+
+        $this->getEntityManager()->persist($symfonyUser);
+        $this->getEntityManager()->flush();
+
     }
 
     public function update(User $user): void
@@ -57,18 +73,26 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
         // TODO: Implement delete() method.
     }
 
-    public function findUserById(int $id): ?User
+    public function findById(int $id): ?User
     {
-        // TODO: Implement findUserById() method.
+        // TODO: Implement findById() method.
     }
 
-    public function findUserByEmail(string $email): ?User
+    public function findByEmail(string $email): ?SymfonyUser
     {
-        // TODO: Implement findUserByEmail() method.
+        $entityManager = $this->getEntityManager();
+
+        return $entityManager->createQuery(
+            'SELECT u
+                FROM App\Security\SymfonyUser u
+                WHERE u.email = :query'
+        )
+            ->setParameter('query', $email)
+            ->getOneOrNullResult();
     }
 
-    public function findUserByUsername(string $username): ?User
+    public function findByUsername(string $username): ?User
     {
-        // TODO: Implement findUserByUsername() method.
+        // TODO: Implement findByUsername() method.
     }
 }

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Error from '../components/Error.tsx';
 import Button from "../components/Button.tsx";
 import Input from "../components/Input.tsx";
@@ -14,10 +13,10 @@ export default function RegistrationPage() {
     const [password, setPassword] = useState('');
     const [birthdate, setBirthdate] = useState('');
     const [picture, setPicture] = useState<File | null>(null);
+    const [pictureUrl, setPictureUrl] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     // const { register } = useContext(AuthContext);
-    const navigate = useNavigate();
 
     const validateForm = () => {
         let valid = true;
@@ -97,23 +96,71 @@ export default function RegistrationPage() {
             return;
         }
 
-        // try {
-        //     const role_id = 2;
-        //     const user = await register(username, firstname, lastname, email, password, birthdate, picture, role_id);
-        //
-        //     if (!user) {
-        //         setError('Ce profil possède déjà un compte.');
-        //     } else {
-        //         navigate('/login');
-        //     }
-        // } catch (error) {
-        //     setError('Erreur lors de la connexion');
-        //     console.error('Erreur lors de la connexion:', error);
-        // }
-    };
+        try {
+            const response = await fetch('http://localhost/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username,
+                    firstname,
+                    lastname,
+                    email,
+                    birthdate,
+                    pictureUrl,
+                    password
+                }),
+            });
+            if (!response.ok) {
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+                    const errorData = await response.json();
+                    if (errorData.message.includes('duplicate key value violates unique constraint')) {
+                        setError('Le nom d\'utilisateur est déjà pris.');
+                    } else {
+                        setError('Erreur lors de l\'inscription.');
+                    }
+                } else {
+                    setError('Erreur lors de l\'inscription. Réponse inattendue du serveur.');
+                }
+            }
+        } catch (error) {
+            console.error('Erreur lors de l\'inscription:', error);
+            setError('Erreur lors de l\'inscription');
+            return;
+        }
+    }
 
-    const handlePictureChange = (file: File | null) => {
-        setPicture(file);
+    const handlePictureChange = async (file: File | null) => {
+        if (!file) {
+            setPicture(null);
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await fetch('http://localhost/upload_file', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                setError('File upload failed');
+            }
+
+            const data = await response.text();
+            if (data) {
+                setPictureUrl(data);
+            } else {
+                setError('Erreur fichier');
+            }
+        } catch (error) {
+            console.error('Error during file upload:', error);
+            setError('Erreur lors du téléchargement du fichier');
+        }
     };
 
     return (
@@ -205,8 +252,8 @@ export default function RegistrationPage() {
                                 placeholder="Votre date de naissance"
                                 aria-describedby="birthdate"
                             />
-                            {errors.password && <Error title="Erreur" text={errors.password} />}
-                            {errors.passwordLength && <Error title="Erreur" text={errors.passwordLength} />}
+                            {errors.birthdate && <Error title="Erreur" text={errors.birthdate} />}
+                            {errors.birthdateRegex && <Error title="Erreur" text={errors.birthdateRegex} />}
                         </div>
                         <div className="mb-4">
                             <label

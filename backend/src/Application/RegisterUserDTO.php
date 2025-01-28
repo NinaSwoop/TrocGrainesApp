@@ -7,19 +7,22 @@ use DateTime;
 
 class RegisterUserDTO
 {
-    private string $username;
-    private string $firstname;
-    private string $lastname;
-    private string $email;
-    private string $birthdate;
-    private string $password;
-    private string $picture;
-    private int $pointBalance;
-    private string $role;
-    private DateTime $createdAt;
-    private DateTime $updatedAt;
+    public string $username;
+    public string $firstname;
+    public string $lastname;
 
-    public function __construct(string $username, string $firstname, string $lastname, string $email, string $birthdate, string $password, string $picture, int $pointBalance, string $role, DateTime $createdAt, DateTime $updatedAt)
+    public string $email;
+    public string $birthdate;
+
+    public string $password;
+    public string $picture;
+    public int $pointBalance;
+
+    public string $role;
+    public DateTime $createdAt;
+    public DateTime $updatedAt;
+
+    public function __construct(string $username, string $firstname, string $lastname, string $email, string $birthdate, string $password, string $picture, int $pointBalance, DateTime $createdAt, DateTime $updatedAt)
     {
         $this->username = $username;
         $this->firstname = $firstname;
@@ -29,9 +32,7 @@ class RegisterUserDTO
         $this->password = $password;
         $this->picture = $picture;
         $this->pointBalance = $pointBalance;
-        $this->role = $role;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
     }
-
 }
