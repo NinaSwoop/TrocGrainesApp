@@ -21,7 +21,7 @@ class RegisterUserService
         $this->passwordHasher = $passwordHasher;
     }
 
-    public function register(RegisterUserDTO $registerUserDTO): void
+    public function register(RegisterUserDto $registerUserDTO): void
     {
         $existingUser = $this->userRepository->findByEmail($registerUserDTO->email);
         if ($existingUser !== null) {

@@ -24,6 +24,10 @@ services:
         public: true
         tags: [ 'controller.service_arguments' ]
 
+    App\Controller\LoginController:
+        public: true
+        tags: [ 'controller.service_arguments' ]
+
     App\Controller\UploadFileController:
         public: true
         tags: [ 'controller.service_arguments' ]

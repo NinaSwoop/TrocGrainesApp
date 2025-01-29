@@ -5,7 +5,7 @@ namespace App\Application;
 use App\Domain\ValueObject\PointBalance;
 use DateTime;
 
-class RegisterUserDTO
+class RegisterUserDto
 {
     public string $username;
     public string $firstname;

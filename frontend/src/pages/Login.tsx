@@ -1,19 +1,20 @@
-import React, { useContext, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+// import { useLocation, useNavigate } from 'react-router-dom';
 import Button from "../components/Button.tsx";
 import Input from "../components/Input.tsx";
+import Error from "../components/Error.tsx";
 // import { AuthContext } from "../context/AuthContext.tsx";
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // const [error, setError] = useState<string | null>(null);
-    // const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [error, setError] = useState<string | null>(null);
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
     // const { login } = useContext(AuthContext);
-    const navigate = useNavigate();
-    const location = useLocation();
+    // const navigate = useNavigate();
+    // const location = useLocation();
 
-    const from = location.state?.from?.pathname || '/';
+    // const from = location.state?.from?.pathname || '/';
 
     const validateForm = () => {
         let valid = true;
@@ -41,16 +42,41 @@ export default function LoginPage() {
         }
 
         try {
-            const user = await login(email, password);
+            const response = await fetch('http://localhost/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email,
+                    password
+                }),
+            });
+            const contentType = response.headers.get('content-type');
+            if (!response.ok) {
+                if (contentType && contentType.includes('application/json')) {
+                    const errorData = await response.json();
 
-            if (!user) {
-                setError('Email ou mot de passe incorrect(s)');
-            } else {
-                navigate(from);
+                    if (response.status === 401) {
+                        setError("Email ou mot de passe incorrect.");
+                    } else if (response.status === 400) {
+                        setError("Données invalides. Vérifiez vos informations.");
+                    } else {
+                        setError(errorData.message || "Erreur inconnue.");
+                    }
+                } else {
+                    setError("Erreur lors de la connexion. Réponse inattendue du serveur.");
+                }
+                return;
             }
+
+            console.log("Connexion réussie !");
+            window.location.href = "/home";
+
         } catch (error) {
-            setError('Erreur lors de la connexion');
-            console.error('Erreur lors de la connexion:', error);
+            console.error("Erreur lors de la connexion:", error);
+            setError("Erreur lors de la connexion. Réponse inattendue du serveur.");
+            return;
         }
     };
 
@@ -70,7 +96,7 @@ export default function LoginPage() {
                             onChange={setEmail}
                             required={true}
                         />
-                        {/*{errors.email && <Error title="Erreur" text={errors.email} />}*/}
+                        {errors.email && <Error title="Erreur" text={errors.email} />}
                     </div>
                     <div className="mb-6">
                         <Input
@@ -81,7 +107,7 @@ export default function LoginPage() {
                             onChange={setPassword}
                             required={true}
                         />
-                        {/*{errors.password && <Error title="Erreur" text={errors.password} />}*/}
+                        {errors.password && <Error title="Erreur" text={errors.password} />}
                     </div>
                     <div className="mt-5 mb-5">
                         <a href="/register"
@@ -89,7 +115,7 @@ export default function LoginPage() {
                             Pas encore inscrit ? Créer un compte
                         </a>
                     </div>
-                    {/*{error && <Error title="Erreur" text={error} />}*/}
+                    {error && <Error title="Erreur" text={error} />}
                     <div className="flex items-center justify-center">
                         <Button
                             text="Connexion"

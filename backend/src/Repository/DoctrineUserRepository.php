@@ -78,17 +78,37 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
         // TODO: Implement findById() method.
     }
 
-    public function findByEmail(string $email): ?SymfonyUser
+    public function findByEmail(string $email): ?User
     {
-        $entityManager = $this->getEntityManager();
+        $symfonyUser = $this->getEntityManager()
+        ->getRepository(SymfonyUser::class)
+        ->$this->findOneBy(['email' => $email]);
 
-        return $entityManager->createQuery(
-            'SELECT u
-                FROM App\Security\SymfonyUser u
-                WHERE u.email = :query'
-        )
-            ->setParameter('query', $email)
-            ->getOneOrNullResult();
+        if (!$symfonyUser) {
+            return null;
+        }
+
+        return new User(
+            id: $symfonyUser->id(),
+            username: $symfonyUser->username(),
+            firstname: $symfonyUser->firstname(),
+            lastname: $symfonyUser->lastname(),
+            email: $symfonyUser->email(),
+            birthdate: $symfonyUser->birthdate(),
+            picture: $symfonyUser->picture(),
+            password: $symfonyUser->password(),
+            pointBalance: $symfonyUser->pointBalance(),
+            createdAt: $symfonyUser->createdAt(),
+            updatedAt: $symfonyUser->updatedAt()
+        );
+
+//        return $entityManager->createQuery(
+//            'SELECT u
+//                FROM App\Security\SymfonyUser u
+//                WHERE u.email = :query'
+//        )
+//            ->setParameter('query', $email)
+//            ->getOneOrNullResult();
     }
 
     public function findByUsername(string $username): ?User

@@ -8,7 +8,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Application\RegisterUserDTO;
+use App\Application\RegisterUserDto;
 use App\Application\RegisterUserService;
 
 class RegistrationController
@@ -34,7 +34,7 @@ class RegistrationController
             return new Response('Invalid JSON', Response::HTTP_BAD_REQUEST);
         }
 
-        $registerUserDTO = new RegisterUserDTO(
+        $registerUserDTO = new RegisterUserDto(
             username: $data['username'],
             firstname: $data['firstname'],
             lastname: $data['lastname'],
