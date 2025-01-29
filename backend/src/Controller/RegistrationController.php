@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Application\RegisterUserDTO;
 use App\Application\RegisterUserService;
-use function PHPUnit\Framework\throwException;
 
 class RegistrationController
 {

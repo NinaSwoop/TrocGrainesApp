@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application;
 
+use App\Domain\Exception\EmailAlreadyUsedException;
 use App\Domain\Model\User;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\ValueObject\PointBalance;
@@ -24,7 +25,7 @@ class RegisterUserService
     {
         $existingUser = $this->userRepository->findByEmail($registerUserDTO->email);
         if ($existingUser !== null) {
-            throw new \Exception('User with this email already exists');
+            throw new EmailAlreadyUsedException();
         }
 
         $hashedPassword = $this->passwordHasher->hash($registerUserDTO->password);
