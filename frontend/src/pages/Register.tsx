@@ -25,27 +25,58 @@ export default function RegistrationPage() {
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         const birthdateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
-        if ((username && !nameRegex.test(username)) ||
-            (lastname && !nameRegex.test(lastname)) ||
-            (firstname && !nameRegex.test(firstname))) {
-            newErrors.nameRegex = 'Le nom ne doit contenir que des lettres, des espaces ou des tirets';
+        if ((username && !nameRegex.test(username))) {
+            newErrors.usernameRegex = "Le nom d'utilisateur ne doit contenir que des lettres, des espaces ou des tirets";
             valid = false;
         }
 
-        if ((username && username.length < 2 || username.length > 50) ||
-            (lastname && lastname.length < 2 || lastname.length > 50) ||
-            (firstname && firstname.length < 2 || firstname.length > 50)) {
-            newErrors.nameLength = 'Le nom doit contenir entre 2 et 50 caractères';
+        if ((firstname && !nameRegex.test(firstname))) {
+            newErrors.firstnameRegex = "Le prénom ne doit contenir que des lettres, des espaces ou des tirets";
             valid = false;
         }
 
-        if (!username || !lastname || !firstname) {
-            newErrors.name = 'Veuillez entrer un nom';
+        if ((lastname && !nameRegex.test(lastname))) {
+            newErrors.lastnameRegex = 'Le nom ne doit contenir que des lettres, des espaces ou des tirets';
+            valid = false;
+        }
+
+        if ((username && username.length < 2 || username.length > 50)) {
+            newErrors.usernameLength = "Le nom d'utilisateur doit contenir entre 2 et 50 caractères";
+            valid = false;
+        }
+
+        if ((firstname && firstname.length < 2 || firstname.length > 50)) {
+            newErrors.firstnameLength = "Le prénom doit contenir entre 2 et 50 caractères";
+            valid = false;
+        }
+
+        if ((lastname && lastname.length < 2 || lastname.length > 50)) {
+            newErrors.lastnameLength = 'Le nom doit contenir entre 2 et 50 caractères';
+            valid = false;
+        }
+
+        if (!username) {
+            newErrors.username = "Veuillez entrer un nom d'utilisateur";
+            valid = false;
+        }
+
+        if (!firstname) {
+            newErrors.firstname = 'Veuillez entrer un prénom';
+            valid = false;
+        }
+
+        if (!lastname) {
+            newErrors.lastname = 'Veuillez entrer un nom';
             valid = false;
         }
 
         if (!email) {
             newErrors.email = 'Veuillez indiquer un email';
+            valid = false;
+        }
+
+        if (!birthdate) {
+            newErrors.birthdate = 'Veuillez indiquer une date de naissance';
             valid = false;
         }
 
@@ -112,22 +143,30 @@ export default function RegistrationPage() {
                     password
                 }),
             });
+            const contentType = response.headers.get('content-type');
             if (!response.ok) {
-                const contentType = response.headers.get('content-type');
                 if (contentType && contentType.includes('application/json')) {
                     const errorData = await response.json();
-                    if (errorData.message.includes('duplicate key value violates unique constraint')) {
-                        setError('Le nom d\'utilisateur est déjà pris.');
+
+                    if (response.status === 409) {
+                        setError("L'email est déjà utilisé.");
+                    } else if (response.status === 400) {
+                        setError("Données invalides. Vérifiez vos informations.");
                     } else {
-                        setError('Erreur lors de l\'inscription.');
+                        setError(errorData.message || "Erreur inconnue.");
                     }
                 } else {
-                    setError('Erreur lors de l\'inscription. Réponse inattendue du serveur.');
+                    setError("Erreur lors de l'inscription. Réponse inattendue du serveur.");
                 }
+                return;
             }
+
+            console.log("Inscription réussie !");
+            window.location.href = "/login";
+
         } catch (error) {
-            console.error('Erreur lors de l\'inscription:', error);
-            setError('Erreur lors de l\'inscription');
+            console.error("Erreur lors de l'inscription:", error);
+            setError("Erreur lors de l'inscription. Réponse inattendue du serveur.");
             return;
         }
     }
@@ -135,6 +174,12 @@ export default function RegistrationPage() {
     const handlePictureChange = async (file: File | null) => {
         if (!file) {
             setPicture(null);
+            return;
+        }
+
+        const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/svg+xml"];
+        if (!allowedTypes.includes(file.type)) {
+            setError("Type de fichier non autorisé.");
             return;
         }
 
@@ -148,7 +193,7 @@ export default function RegistrationPage() {
             });
 
             if (!response.ok) {
-                setError('File upload failed');
+                setError("Erreur lors du téléchargement du fichier");
             }
 
             const data = await response.text();
@@ -158,7 +203,7 @@ export default function RegistrationPage() {
                 setError('Erreur fichier');
             }
         } catch (error) {
-            console.error('Error during file upload:', error);
+            console.error("Erreur lors du téléchargement du fichier", error);
             setError('Erreur lors du téléchargement du fichier');
         }
     };
@@ -181,9 +226,9 @@ export default function RegistrationPage() {
                                 required={true}
                                 aria-describedby="username"
                             />
-                            {errors.name && <Error title="Erreur" text={errors.username} />}
-                            {errors.nameRegex && <Error title="Erreur" text={errors.nameRegex} />}
-                            {errors.nameLength && <Error title="Erreur" text={errors.nameLength} />}
+                            {errors.username && <Error title="Erreur" text={errors.username} />}
+                            {errors.usernameRegex && <Error title="Erreur" text={errors.usernameRegex} />}
+                            {errors.usernameLength && <Error title="Erreur" text={errors.usernameLength} />}
                         </div>
                         <div className="mb-4">
                             <Input
@@ -195,9 +240,9 @@ export default function RegistrationPage() {
                                 required={true}
                                 aria-describedby="lastname"
                             />
-                            {errors.name && <Error title="Erreur" text={errors.name} />}
-                            {errors.nameRegex && <Error title="Erreur" text={errors.nameRegex} />}
-                            {errors.nameLength && <Error title="Erreur" text={errors.nameLength} />}
+                            {errors.lastname && <Error title="Erreur" text={errors.lastname} />}
+                            {errors.lastnameRegex && <Error title="Erreur" text={errors.lastnameRegex} />}
+                            {errors.lastnameLength && <Error title="Erreur" text={errors.lastnameLength} />}
                         </div>
                     </div>
                     <div className="columns-2">
@@ -211,9 +256,9 @@ export default function RegistrationPage() {
                                 required={true}
                                 aria-describedby="firstname"
                             />
-                            {errors.name && <Error title="Erreur" text={errors.name} />}
-                            {errors.nameRegex && <Error title="Erreur" text={errors.nameRegex} />}
-                            {errors.nameLength && <Error title="Erreur" text={errors.nameLength} />}
+                            {errors.firstname && <Error title="Erreur" text={errors.firstname} />}
+                            {errors.firstnameRegex && <Error title="Erreur" text={errors.firstnameRegex} />}
+                            {errors.firstnameLength && <Error title="Erreur" text={errors.firstnameLength} />}
                         </div>
                         <div className="mb-4">
                             <Input

@@ -26,31 +26,28 @@ class RegistrationController
     public function register(Request $request ): Response
     {
         $data = json_decode($request->getContent(), true);
-        dump($data);
+
         $this->logger->info('Received registration data: ', $data);
 
         if (!$data) {
+            $this->logger->error('Invalid JSON');
             return new Response('Invalid JSON', Response::HTTP_BAD_REQUEST);
         }
 
-        try {
-            $registerUserDTO = new RegisterUserDTO(
-                username: $data['username'],
-                firstname: $data['firstname'],
-                lastname: $data['lastname'],
-                email: $data['email'],
-                birthdate: $data['birthdate'],
-                password: $data['password'],
-                picture: $data['pictureUrl'],
-                pointBalance: 3,
-                createdAt: new \DateTime(),
-                updatedAt: new \DateTime(),
-            );
-            $this->registerUserService->register($registerUserDTO);
-        } catch (\Exception $e) {
-            $this->logger->error('Failed to register user: ' . $e->getMessage());
-            return new Response($e->getMessage(), Response::HTTP_BAD_REQUEST);
-        }
+        $registerUserDTO = new RegisterUserDTO(
+            username: $data['username'],
+            firstname: $data['firstname'],
+            lastname: $data['lastname'],
+            email: $data['email'],
+            birthdate: $data['birthdate'],
+            password: $data['password'],
+            picture: $data['pictureUrl'],
+            pointBalance: 3,
+            createdAt: new \DateTime(),
+            updatedAt: new \DateTime(),
+        );
+
+        $this->registerUserService->register($registerUserDTO);
 
         $status = Response::HTTP_CREATED;
         return new Response('user created', $status);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\EventListener;
 
 use App\Domain\Exception\EmailAlreadyUsedException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
@@ -33,9 +34,15 @@ class ExceptionListener
         $response->setContent($message);
         $response->headers->set('Content-Type', 'text/plain; charset=utf-8');
 
-        if ($exception instanceof HttpExceptionInterface || $exception instanceof EmailAlreadyUsedException) {
+        if ($exception instanceof HttpExceptionInterface) {
             $response->setStatusCode($exception->getStatusCode());
             $response->headers->replace($exception->getHeaders());
+        }
+        elseif ($exception instanceof EmailAlreadyUsedException) {
+            $response = new JsonResponse(
+                ['message' => $exception->getMessage()],
+                Response::HTTP_CONFLICT
+            );
         }
         else {
             $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
