@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Application\RegisterUserDto;
+use App\Application\RegisterUserService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use App\Application\RegisterUserDto;
-use App\Application\RegisterUserService;
 
 class RegistrationController
 {
@@ -22,8 +22,8 @@ class RegistrationController
         $this->logger = $logger;
     }
 
-    #[Route("/auth/register", name: 'auth_register', methods: ['POST', 'GET'])]
-    public function register(Request $request ): Response
+    #[Route('/auth/register', name: 'auth_register', methods: ['POST', 'GET'])]
+    public function register(Request $request): Response
     {
         $data = json_decode($request->getContent(), true);
 
@@ -31,6 +31,7 @@ class RegistrationController
 
         if (!$data) {
             $this->logger->error('Invalid JSON');
+
             return new Response('Invalid JSON', Response::HTTP_BAD_REQUEST);
         }
 
@@ -50,6 +51,7 @@ class RegistrationController
         $this->registerUserService->register($registerUserDTO);
 
         $status = Response::HTTP_CREATED;
+
         return new Response('user created', $status);
     }
 }

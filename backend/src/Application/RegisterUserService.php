@@ -7,8 +7,8 @@ namespace App\Application;
 use App\Domain\Exception\EmailAlreadyUsedException;
 use App\Domain\Model\User;
 use App\Domain\Repository\UserRepositoryInterface;
-use App\Domain\ValueObject\PointBalance;
 use App\Domain\Security\PasswordHasherInterface;
+use App\Domain\ValueObject\PointBalance;
 
 class RegisterUserService
 {
@@ -23,8 +23,7 @@ class RegisterUserService
 
     public function register(RegisterUserDto $registerUserDTO): void
     {
-        $existingUser = $this->userRepository->findByEmail($registerUserDTO->email);
-        if ($existingUser !== null) {
+        if ($this->userRepository->findByEmail($registerUserDTO->email) instanceof User) {
             throw new EmailAlreadyUsedException();
         }
 
@@ -40,8 +39,9 @@ class RegisterUserService
             picture: $registerUserDTO->picture,
             password: $hashedPassword,
             pointBalance: new PointBalance(3),
-            createdAt: new \DateTime(),
-            updatedAt: new \DateTime()
+            roles: ['ROLE_USER'],
+            createdAt: new \DateTimeImmutable(),
+            updatedAt: new \DateTimeImmutable()
         );
 
         $this->userRepository->add($user);

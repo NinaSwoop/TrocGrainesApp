@@ -2,9 +2,6 @@
 
 namespace App\Application;
 
-use App\Domain\ValueObject\PointBalance;
-use DateTime;
-
 class RegisterUserDto
 {
     public string $username;
@@ -19,10 +16,10 @@ class RegisterUserDto
     public int $pointBalance;
 
     public string $role;
-    public DateTime $createdAt;
-    public DateTime $updatedAt;
+    public \DateTime $createdAt;
+    public \DateTime $updatedAt;
 
-    public function __construct(string $username, string $firstname, string $lastname, string $email, string $birthdate, string $password, string $picture, int $pointBalance, DateTime $createdAt, DateTime $updatedAt)
+    public function __construct(string $username, string $firstname, string $lastname, string $email, string $birthdate, string $password, ?string $picture, int $pointBalance, \DateTime $createdAt, \DateTime $updatedAt)
     {
         $this->username = $username;
         $this->firstname = $firstname;

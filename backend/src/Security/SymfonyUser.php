@@ -5,12 +5,10 @@ namespace App\Security;
 use App\Repository\DoctrineUserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: DoctrineUserRepository::class)]
 #[ORM\Table(name: '`user`')]
-class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
+class SymfonyUser
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -38,7 +36,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::TEXT)]
     private ?string $password = null;
 
-    #[ORM\Column(options: ["default" => 3])]
+    #[ORM\Column(options: ['default' => 3])]
     private ?int $point_balance = null;
 
     #[ORM\Column(type: 'json')]
@@ -50,7 +48,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updated_at = null;
 
-    public function id(): ?int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -62,7 +60,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function username(): ?string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -74,7 +72,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function firstname(): ?string
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
@@ -86,7 +84,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function lastname(): ?string
+    public function getLastname(): ?string
     {
         return $this->lastname;
     }
@@ -98,7 +96,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function email(): ?string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -110,7 +108,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function birthdate(): ?\DateTimeInterface
+    public function getBirthdate(): ?\DateTimeInterface
     {
         return $this->birthdate;
     }
@@ -122,7 +120,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function picture(): ?string
+    public function getPicture(): ?string
     {
         return $this->picture;
     }
@@ -146,7 +144,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function pointBalance(): ?int
+    public function getPointBalance(): ?int
     {
         return $this->point_balance;
     }
@@ -174,7 +172,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function createdAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
@@ -186,7 +184,7 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function updatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updated_at;
     }
@@ -196,15 +194,5 @@ class SymfonyUser implements UserInterface, PasswordAuthenticatedUserInterface
         $this->updated_at = $updated_at;
 
         return $this;
-    }
-
-    public function eraseCredentials(): void
-    {
-        $this->password = null;
-    }
-
-    public function getUserIdentifier(): string
-    {
-        return (string) $this->email;
     }
 }

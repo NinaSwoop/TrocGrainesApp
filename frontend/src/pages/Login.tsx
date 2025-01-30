@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
-// import { useLocation, useNavigate } from 'react-router-dom';
 import Button from "../components/Button.tsx";
 import Input from "../components/Input.tsx";
 import Error from "../components/Error.tsx";
-// import { AuthContext } from "../context/AuthContext.tsx";
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
-    // const { login } = useContext(AuthContext);
-    // const navigate = useNavigate();
-    // const location = useLocation();
-
-    // const from = location.state?.from?.pathname || '/';
 
     const validateForm = () => {
         let valid = true;
@@ -40,7 +33,8 @@ export default function LoginPage() {
         if (!validateForm()) {
             return;
         }
-
+        console.log(email);
+        console.log(password);
         try {
             const response = await fetch('http://localhost/auth/login', {
                 method: 'POST',
@@ -51,6 +45,7 @@ export default function LoginPage() {
                     email,
                     password
                 }),
+                credentials: "include",
             });
             const contentType = response.headers.get('content-type');
             if (!response.ok) {

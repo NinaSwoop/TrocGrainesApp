@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class ApiControllerTest extends TestCase
 {
-    public function test_return_json_message(): void
+    public function testReturnJsonMessage(): void
     {
         // Arrange
         $apiController = new ApiController();

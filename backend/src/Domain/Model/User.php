@@ -4,8 +4,6 @@ namespace App\Domain\Model;
 
 use App\Domain\ValueObject\PointBalance;
 
-use DateTime;
-
 class User
 {
     private int $id;
@@ -13,13 +11,15 @@ class User
     private string $firstname;
     private string $lastname;
     private string $email;
-    private DateTime $birthdate;
+    private \DateTime $birthdate;
     private string $picture;
     private string $password;
     private PointBalance $pointBalance;
     private TransactionRole $transactionRole;
-    private DateTime $createdAt;
-    private DateTime $updatedAt;
+
+    private array $roles;
+    private \DateTimeImmutable $createdAt;
+    private \DateTimeImmutable $updatedAt;
 
     public function __construct(
         int $id,
@@ -27,12 +27,13 @@ class User
         string $firstname,
         string $lastname,
         string $email,
-        DateTime $birthdate,
+        \DateTime $birthdate,
         string $picture,
         string $password,
         PointBalance $pointBalance,
-        DateTime $createdAt,
-        DateTime $updatedAt
+        array $roles,
+        \DateTimeImmutable $createdAt,
+        \DateTimeImmutable $updatedAt,
     ) {
         $this->id = $id;
         $this->username = $username;
@@ -43,6 +44,7 @@ class User
         $this->picture = $picture;
         $this->password = $password;
         $this->pointBalance = $pointBalance;
+        $this->roles = $roles;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
     }
@@ -51,6 +53,7 @@ class User
     {
         return $this->id;
     }
+
     public function username(): string
     {
         return $this->username;
@@ -71,7 +74,7 @@ class User
         return $this->email;
     }
 
-    public function birthdate(): DateTime
+    public function birthdate(): \DateTime
     {
         return $this->birthdate;
     }
@@ -96,18 +99,22 @@ class User
         return $this->transactionRole;
     }
 
-    public function createdAt(): DateTime
+    public function roles(): array
+    {
+        return $this->roles;
+    }
+
+    public function createdAt(): \DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function updatedAt(): DateTime
+    public function updatedAt(): \DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-//    public function earnPoints() : void {
-//
-//    }
-
+    //    public function earnPoints() : void {
+    //
+    //    }
 }

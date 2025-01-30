@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Domain\Model\User;
+use App\Domain\ValueObject\PointBalance;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Security\SymfonyUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -54,65 +55,101 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
         $symfonyUser->setBirthdate($user->birthdate());
         $symfonyUser->setPicture($user->picture());
         $symfonyUser->setPassword($user->password());
-        $symfonyUser->setPointBalance(3);
-        $symfonyUser->setRole($symfonyUser->getRoles());
+        $symfonyUser->setPointBalance($user->pointBalance()->getValue());
+        $symfonyUser->setRole($user->roles());
         $symfonyUser->setCreatedAt(new \DateTimeImmutable());
 
         $this->getEntityManager()->persist($symfonyUser);
         $this->getEntityManager()->flush();
-
     }
 
     public function update(User $user): void
     {
-        // TODO: Implement update() method.
+        $symfonyUser = $this->getEntityManager()
+            ->getRepository(SymfonyUser::class)
+            ->findOneBy(['id' => $user->id()]);
+
+        if (!$symfonyUser) {
+            throw new \RuntimeException('Utilisateur non trouvé en base.');
+        }
+
+        $symfonyUser->setUsername($user->username());
+        $symfonyUser->setFirstname($user->firstname());
+        $symfonyUser->setLastname($user->lastname());
+        $symfonyUser->setEmail($user->email());
+        $symfonyUser->setBirthdate($user->birthdate());
+        $symfonyUser->setPicture($user->picture());
+        $symfonyUser->setPassword($user->password());
+        $symfonyUser->setPointBalance($user->pointBalance()->getValue());
+        $symfonyUser->setRole($user->roles());
+        $symfonyUser->setUpdatedAt(new \DateTimeImmutable());
+
+        $this->getEntityManager()->flush();
     }
 
     public function delete(User $user): void
     {
-        // TODO: Implement delete() method.
+        $symfonyUser = $this->getEntityManager()
+            ->getRepository(SymfonyUser::class)
+            ->findOneBy(['id' => $user->id()]);
+
+        if (!$symfonyUser) {
+            throw new \RuntimeException('Utilisateur non trouvé en base.');
+        }
+
+        $this->getEntityManager()->remove($symfonyUser);
+        $this->getEntityManager()->flush();
     }
 
     public function findById(int $id): ?User
     {
-        // TODO: Implement findById() method.
-    }
-
-    public function findByEmail(string $email): ?User
-    {
         $symfonyUser = $this->getEntityManager()
-        ->getRepository(SymfonyUser::class)
-        ->$this->findOneBy(['email' => $email]);
+            ->getRepository(SymfonyUser::class)
+            ->find($id);
 
         if (!$symfonyUser) {
             return null;
         }
 
         return new User(
-            id: $symfonyUser->id(),
-            username: $symfonyUser->username(),
-            firstname: $symfonyUser->firstname(),
-            lastname: $symfonyUser->lastname(),
-            email: $symfonyUser->email(),
-            birthdate: $symfonyUser->birthdate(),
-            picture: $symfonyUser->picture(),
-            password: $symfonyUser->password(),
-            pointBalance: $symfonyUser->pointBalance(),
-            createdAt: $symfonyUser->createdAt(),
-            updatedAt: $symfonyUser->updatedAt()
+            id: $symfonyUser->getId(),
+            username: $symfonyUser->getUsername(),
+            firstname: $symfonyUser->getFirstname(),
+            lastname: $symfonyUser->getLastname(),
+            email: $symfonyUser->getEmail(),
+            birthdate: $symfonyUser->getBirthdate(),
+            picture: $symfonyUser->getPicture(),
+            password: $symfonyUser->getPassword(),
+            pointBalance: new PointBalance($symfonyUser->getPointBalance()),
+            roles: $symfonyUser->getRoles(),
+            createdAt: $symfonyUser->getCreatedAt(),
+            updatedAt: $symfonyUser->getUpdatedAt() ?? new \DateTimeImmutable(),
         );
-
-//        return $entityManager->createQuery(
-//            'SELECT u
-//                FROM App\Security\SymfonyUser u
-//                WHERE u.email = :query'
-//        )
-//            ->setParameter('query', $email)
-//            ->getOneOrNullResult();
     }
 
-    public function findByUsername(string $username): ?User
+    public function findByEmail(string $email): ?User
     {
-        // TODO: Implement findByUsername() method.
+        $symfonyUser = $this->getEntityManager()
+        ->getRepository(SymfonyUser::class)
+        ->findOneBy(['email' => $email]);
+
+        if (!$symfonyUser) {
+            return null;
+        }
+
+        return new User(
+            id: $symfonyUser->getId(),
+            username: $symfonyUser->getUsername(),
+            firstname: $symfonyUser->getFirstname(),
+            lastname: $symfonyUser->getLastname(),
+            email: $symfonyUser->getEmail(),
+            birthdate: $symfonyUser->getBirthdate(),
+            picture: $symfonyUser->getPicture(),
+            password: $symfonyUser->getPassword(),
+            pointBalance: new PointBalance($symfonyUser->getPointBalance()),
+            roles: $symfonyUser->getRoles(),
+            createdAt: $symfonyUser->getCreatedAt(),
+            updatedAt: $symfonyUser->getUpdatedAt() ?? new \DateTimeImmutable(),
+        );
     }
 }

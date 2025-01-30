@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Domain\Model\User;
 use App\Domain\Repository\UserRepositoryInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
@@ -9,15 +10,20 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Psr\Log\LoggerInterface;
+
 
 class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
     private UserRepositoryInterface $userRepository;
+    private LoggerInterface $logger;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepositoryInterface $userRepository, LoggerInterface $logger)
     {
         $this->userRepository = $userRepository;
+        $this->logger = $logger;
     }
+
     /**
      * Symfony calls this method if you use features like switch_user
      * or remember_me.
@@ -32,10 +38,11 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         $domainUser = $this->userRepository->findByEmail($identifier);
 
         if (!$domainUser) {
+            $this->logger->error(sprintf('Utilisateur non trouvé pour identifiant : %s', $identifier));
             throw new UserNotFoundException(sprintf('Utilisateur avec l\'identifiant "%s" non trouvé.', $identifier));
         }
 
-        return new SymfonyUser($domainUser);
+        return new SecurityUser($domainUser);
     }
 
     /**
@@ -51,13 +58,19 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
      */
     public function refreshUser(UserInterface $user): UserInterface
     {
-        if (!$user instanceof SymfonyUser) {
-            throw new UnsupportedUserException(sprintf('Invalid user class "%s".', $user::class));
+        if (!$user instanceof SecurityUser) {
+            $this->logger->error(sprintf('Instances of "%s" are not supported.', get_class($user)));
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
         }
 
-        // Return a User object after making sure its data is "fresh".
-        // Or throw a UsernameNotFoundException if the user no longer exists.
-        throw new \Exception('TODO: fill in refreshUser() inside '.__FILE__);
+        $domainUser = $this->userRepository->findByEmail($user->getUserIdentifier());
+
+        if (!$domainUser) {
+            $this->logger->error(sprintf('Utilisateur avec l\'identifiant "%s" non trouvé.', $user->getUserIdentifier()));
+            throw new UserNotFoundException(sprintf('Utilisateur avec l\'identifiant "%s" non trouvé.', $user->getUserIdentifier()));
+        }
+
+        return new SecurityUser($domainUser);
     }
 
     /**
@@ -65,7 +78,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
      */
     public function supportsClass(string $class): bool
     {
-        return SymfonyUser::class === $class || is_subclass_of($class, SymfonyUser::class);
+        return SecurityUser::class === $class || is_subclass_of($class, SecurityUser::class);
     }
 
     /**
@@ -73,15 +86,26 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
-
-        if (!$user instanceof SymfonyUser) {
+        if (!$user instanceof SecurityUser) {
+            $this->logger->error(sprintf('Classe utilisateur non prise en charge pour mise à jour de mot de passe : "%s".', get_class($user)));
             throw new UnsupportedUserException(sprintf('Classe utilisateur non prise en charge pour mise à jour de mot de passe : "%s".', get_class($user)));
         }
 
-        // Mise à jour du mot de passe de l'utilisateur métier
-        $domainUser = $user->getDomainUser();
-        $domainUser->setPassword($newHashedPassword);
+        $updatedUser = new User(
+            id: $user->getUser()->id(),
+            username: $user->getUser()->username(),
+            firstname: $user->getUser()->firstname(),
+            lastname: $user->getUser()->lastname(),
+            email: $user->getUser()->email(),
+            birthdate: $user->getUser()->birthdate(),
+            picture: $user->getUser()->picture(),
+            password: $newHashedPassword,
+            pointBalance: $user->getUser()->pointBalance(),
+            roles: $user->getUser()->roles(),
+            createdAt: $user->getUser()->createdAt(),
+            updatedAt: new \DateTimeImmutable()
+        );
 
-        $this->userRepository->save($domainUser);
+        $this->userRepository->update($updatedUser);
     }
 }
