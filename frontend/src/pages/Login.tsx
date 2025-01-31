@@ -42,8 +42,12 @@ export default function LoginPage() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    email,
-                    password
+                    security: {
+                        credentials: {
+                            email,
+                            password
+                        }
+                    }
                 }),
                 credentials: "include",
             });
@@ -66,7 +70,9 @@ export default function LoginPage() {
             }
 
             console.log("Connexion réussie !");
-            window.location.href = "/home";
+            window.location.href = "/";
+
+            localStorage.setItem('user', JSON.stringify(response));
 
         } catch (error) {
             console.error("Erreur lors de la connexion:", error);

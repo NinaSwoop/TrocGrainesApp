@@ -28,12 +28,26 @@ services:
         public: true
         tags: [ 'controller.service_arguments' ]
 
+    App\Controller\LogoutController:
+        public: true
+        tags: [ 'controller.service_arguments' ]
+
     App\Controller\UploadFileController:
+        public: true
+        tags: [ 'controller.service_arguments' ]
+
+    App\Controller\AuthenticatedController:
         public: true
         tags: [ 'controller.service_arguments' ]
 
     App\Domain\Security\PasswordHasherInterface:
         alias: App\Security\SymfonyPasswordHasher
+
+    App\Domain\Security\AuthenticatedUserInterface:
+        alias: App\Security\SymfonySessionAuthentication
+
+    Symfony\Component\HttpFoundation\Session\SessionInterface:
+        factory: ['@session.factory', 'createSession']
 
 #    App\EventListener\ExceptionListener:
 #        tags:

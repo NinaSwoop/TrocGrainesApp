@@ -4,17 +4,23 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Application\LogoutUserService;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class LogoutController
 {
-    #[Route('/auth/logout', name: 'auth_logout', methods: ['POST'])]
-    public function logout(SessionInterface $session): Response
+    private LogoutUserService $logoutUserService;
+    public function __construct(LogoutUserService $logoutUserService)
     {
-        $session->invalidate();
+        $this->logoutUserService = $logoutUserService;
+    }
+    #[Route('/auth/logout', name: 'auth_logout', methods: ['POST'])]
+    public function logout(): JsonResponse
+    {
+        $this->logoutUserService->logout();
 
-        return new Response('Déconnexion réussie', Response::HTTP_OK);
+        return new JsonResponse('Déconnexion réussie', Response::HTTP_OK);
     }
 }
