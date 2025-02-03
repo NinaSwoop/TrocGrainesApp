@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import Button from "../components/Button.tsx";
 import Input from "../components/Input.tsx";
 import Error from "../components/Error.tsx";
+import {AuthContext} from "../context/AuthContext.tsx";
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const { login }  = useContext(AuthContext);
 
     const validateForm = () => {
         let valid = true;
@@ -36,48 +38,12 @@ export default function LoginPage() {
         console.log(email);
         console.log(password);
         try {
-            const response = await fetch('http://localhost/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    security: {
-                        credentials: {
-                            email,
-                            password
-                        }
-                    }
-                }),
-                credentials: "include",
-            });
-            const contentType = response.headers.get('content-type');
-            if (!response.ok) {
-                if (contentType && contentType.includes('application/json')) {
-                    const errorData = await response.json();
-
-                    if (response.status === 401) {
-                        setError("Email ou mot de passe incorrect.");
-                    } else if (response.status === 400) {
-                        setError("Données invalides. Vérifiez vos informations.");
-                    } else {
-                        setError(errorData.message || "Erreur inconnue.");
-                    }
-                } else {
-                    setError("Erreur lors de la connexion. Réponse inattendue du serveur.");
-                }
-                return;
-            }
-
+            await login(email, password);
             console.log("Connexion réussie !");
             window.location.href = "/";
-
-            localStorage.setItem('user', JSON.stringify(response));
-
         } catch (error) {
             console.error("Erreur lors de la connexion:", error);
             setError("Erreur lors de la connexion. Réponse inattendue du serveur.");
-            return;
         }
     };
 

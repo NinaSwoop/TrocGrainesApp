@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Error from '../components/Error.tsx';
 import Button from "../components/Button.tsx";
 import Input from "../components/Input.tsx";
 import UploadImageZone from '../components/UploadImageZone.tsx';
-// import { AuthContext } from '../context/AuthContext.tsx';
+import {AuthContext} from '../context/AuthContext.tsx';
 
 export default function RegistrationPage() {
     const [username, setUsername] = useState('');
@@ -16,7 +16,7 @@ export default function RegistrationPage() {
     const [pictureUrl, setPictureUrl] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
-    // const { register } = useContext(AuthContext);
+    const { register }  = useContext(AuthContext);
 
     const validateForm = () => {
         let valid = true;
@@ -128,46 +128,12 @@ export default function RegistrationPage() {
         }
 
         try {
-            const response = await fetch('http://localhost/auth/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    username,
-                    firstname,
-                    lastname,
-                    email,
-                    birthdate,
-                    pictureUrl,
-                    password
-                }),
-            });
-            const contentType = response.headers.get('content-type');
-            if (!response.ok) {
-                if (contentType && contentType.includes('application/json')) {
-                    const errorData = await response.json();
-
-                    if (response.status === 409) {
-                        setError("L'email est déjà utilisé.");
-                    } else if (response.status === 400) {
-                        setError("Données invalides. Vérifiez vos informations.");
-                    } else {
-                        setError(errorData.message || "Erreur inconnue.");
-                    }
-                } else {
-                    setError("Erreur lors de l'inscription. Réponse inattendue du serveur.");
-                }
-                return;
-            }
-
+            await register(username, firstname, lastname, email, birthdate, pictureUrl, password);
             console.log("Inscription réussie !");
             window.location.href = "/login";
-
         } catch (error) {
             console.error("Erreur lors de l'inscription:", error);
             setError("Erreur lors de l'inscription. Réponse inattendue du serveur.");
-            return;
         }
     }
 
@@ -274,65 +240,65 @@ export default function RegistrationPage() {
                             {errors.emailNotComplete && <Error title="Erreur" text={errors.emailNotComplete} />}
                         </div>
                     </div>
-                        <div className="mb-4">
-                            <Input
-                                label="Mot de passe"
-                                type="password"
-                                placeholder="********"
-                                value={password}
-                                onChange={setPassword}
-                                required={true}
-                                aria-describedby="password"
-                            />
-                            {errors.password && <Error title="Erreur" text={errors.password} />}
-                            {errors.passwordLength && <Error title="Erreur" text={errors.passwordLength} />}
-                        </div>
-                        <div className="mb-4">
-                            <Input
-                                label="Date de naissance"
-                                type="date"
-                                value={birthdate}
-                                onChange={setBirthdate}
-                                required={true}
-                                placeholder="Votre date de naissance"
-                                aria-describedby="birthdate"
-                            />
-                            {errors.birthdate && <Error title="Erreur" text={errors.birthdate} />}
-                            {errors.birthdateRegex && <Error title="Erreur" text={errors.birthdateRegex} />}
-                        </div>
-                        <div className="mb-4">
-                            <label
-                                className="block text-green-dark text-sm font-bold mb-2"
-                                htmlFor="picture"
-                            >
-                                Photo de profil (optionnel)
-                            </label>
-                            <UploadImageZone
-                                label="picture"
-                                type="file"
-                                onChange={handlePictureChange}
-                                accept="image/png, image/jpeg, image/svg+xml, image/webp"
-                                placeholder="picture"
-                                required={false}
-                                value={picture}
-                                aria-describedby="picture"
-                            />
-                            {errors.pictureType && <Error title="Erreur" text={errors.pictureType} />}
-                        </div>
-                        <div className="mt-5 mb-5">
-                            <a href="/login"
-                               className="text sm text-green-dark text-decoration-line: underline">
-                                Déjà inscrit ? Connectez-vous
-                            </a>
-                        </div>
-                        {error && <Error title="Erreur" text={error} />}
-                        <div className="flex items-center justify-center">
-                            <Button
-                                text="Inscription"
-                                type="submit"
-                                className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold"
-                            />
-                        </div>
+                    <div className="mb-4">
+                        <Input
+                            label="Mot de passe"
+                            type="password"
+                            placeholder="********"
+                            value={password}
+                            onChange={setPassword}
+                            required={true}
+                            aria-describedby="password"
+                        />
+                        {errors.password && <Error title="Erreur" text={errors.password} />}
+                        {errors.passwordLength && <Error title="Erreur" text={errors.passwordLength} />}
+                    </div>
+                    <div className="mb-4">
+                        <Input
+                            label="Date de naissance"
+                            type="date"
+                            value={birthdate}
+                            onChange={setBirthdate}
+                            required={true}
+                            placeholder="Votre date de naissance"
+                            aria-describedby="birthdate"
+                        />
+                        {errors.birthdate && <Error title="Erreur" text={errors.birthdate} />}
+                        {errors.birthdateRegex && <Error title="Erreur" text={errors.birthdateRegex} />}
+                    </div>
+                    <div className="mb-4">
+                        <label
+                            className="block text-green-dark text-sm font-bold mb-2"
+                            htmlFor="picture"
+                        >
+                            Photo de profil (optionnel)
+                        </label>
+                        <UploadImageZone
+                            label="picture"
+                            type="file"
+                            onChange={handlePictureChange}
+                            accept="image/png, image/jpeg, image/svg+xml, image/webp"
+                            placeholder="picture"
+                            required={false}
+                            value={picture}
+                            aria-describedby="picture"
+                        />
+                        {errors.pictureType && <Error title="Erreur" text={errors.pictureType} />}
+                    </div>
+                    <div className="mt-5 mb-5">
+                        <a href="/login"
+                           className="text sm text-green-dark text-decoration-line: underline">
+                            Déjà inscrit ? Connectez-vous
+                        </a>
+                    </div>
+                    {error && <Error title="Erreur" text={error} />}
+                    <div className="flex items-center justify-center">
+                        <Button
+                            text="Inscription"
+                            type="submit"
+                            className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold"
+                        />
+                    </div>
                 </form>
             </div>
         </div>
