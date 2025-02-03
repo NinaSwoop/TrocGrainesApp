@@ -3,9 +3,9 @@
 namespace App\Repository;
 
 use App\Domain\Model\User;
-use App\Domain\ValueObject\PointBalance;
 use App\Domain\Repository\UserRepositoryInterface;
-use App\Security\SymfonyUser;
+use App\Domain\ValueObject\PointBalance;
+use App\Entity\SymfonyUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
