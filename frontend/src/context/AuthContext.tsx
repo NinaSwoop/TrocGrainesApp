@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 interface AuthContextType {
-    user: { email: string; roles: string[] } | null;
+    user: { email: string; roles: string[]; id: number; point_balance: number; username: string} | null;
     login: (email: string, password: string) => Promise<void>;
     logout: () => Promise<void>;
     register: (username: string, firstname: string, lastname: string, email: string, birthdate: string, pictureUrl: string | null, password: string) => Promise<void>;
@@ -27,7 +27,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-    const [user, setUser] = useState<{ email: string; roles: string[] } | null>(null);
+    const [user, setUser] = useState<{ email: string; roles: string[], id: number; point_balance: number; username: string } | null>(null);
 
     useEffect(() => {
         fetch("http://localhost/auth/auth_user", {
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             .then(res => res.ok ? res.json() : null)
             .then(data => {
                 if (data) {
-                    setUser({ email: data.email, roles: data.roles });
+                    setUser({ email: data.email, roles: data.roles, id: data.id, point_balance: data.point_balance, username: data.username });
                 }
             })
             .catch(() => setUser(null));
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
         if (res.ok) {
             const data = await res.json();
-            setUser({ email: data.email, roles: data.roles });
+            setUser({ email: data.email, roles: data.roles, id: data.id, point_balance: data.point_balance, username: data.username });
         } else {
             throw new Error("Échec de l'authentification");
         }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Application\AuthenticatedUserService;
+use App\Application\RegisterUserDto;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -44,7 +45,10 @@ class AuthenticatedController
 
         $content = json_encode([
             'email' => $authenticatedUserDto->email,
-            'roles' => $authenticatedUserDto->roles
+            'roles' => $authenticatedUserDto->roles,
+            'id' => $authenticatedUserDto->id,
+            'point_balance'=> $authenticatedUserDto->point_balance,
+            'username'=> $authenticatedUserDto->username,
         ]);
 
         return new Response($content, Response::HTTP_OK);

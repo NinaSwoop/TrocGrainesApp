@@ -86,8 +86,7 @@ const Home = () => {
             {error && <Error title="Erreur" text={error} />}
 
             <div>
-                <div className="flex flex-col md:flex-row justify-between items-center ml-4 my-4 mr-4 space-y-2 md:space-y-0 md:space-x-4">
-
+                <div className="mx-auto w-full bg-green-dark pt-24 fixed top-0 z-10 flex flex-col md:flex-row justify-between items-center my-4 mr-4 space-y-2 md:space-y-0 md:space-x-4">
                     <div className="md:w-1/4 relative w-full max-w-md transition-all duration-300">
                         <input
                             type="text"
@@ -141,17 +140,16 @@ const Home = () => {
                         }`}
                         onClick={handleButtonClick}
                     />
-                </div>
 
-                {user ? (
-                <Link to={"/create-ad"}>
+                    {user ? (
+                        <Link to={"/create-ad"}>
 
-                    <Button
-                        type="button"
-                        text="Créer une annonce"
-                        className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold"
-                    />
-                </Link> ) : (
+                            <Button
+                                type="button"
+                                text="Créer une annonce"
+                                className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold"
+                            />
+                        </Link> ) : (
                         <Link to={"/login"}>
 
                             <Button
@@ -160,9 +158,10 @@ const Home = () => {
                                 className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold"
                             />
                         </Link> )}
+                </div>
             </div>
 
-            <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-5 gap-4 place-items-center">
+            <div className="pt-32 container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-5 gap-4 place-items-center">
                 {loading ? (
                     <p>Chargement des annonces...</p>
                 ) : filteredAds.length > 0 ? (

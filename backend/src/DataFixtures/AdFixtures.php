@@ -39,7 +39,7 @@ class AdFixtures extends Fixture implements DependentFixtureInterface
             AdStatusFixtures::RESERVED_REFERENCE,
         ];
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 20; $i++) {
 
             $randomOwnerIndex = rand(0, 9);
 

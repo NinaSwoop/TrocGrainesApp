@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import logo from "../assets/logo.svg";
 import userLogo from "../assets/user.svg";
+import helpdeskLogo from "../assets/helpdesk.svg";
+import leaveLogo from "../assets/leave.svg";
 export default function Navbar() {
     const { user, logout } = useContext(AuthContext);
 
@@ -23,20 +25,39 @@ export default function Navbar() {
                     <p className="text-lg">TROC & GRAINES</p>
                 </a>
             </div>
-            <div className="flex items-center">
-                {user ? (
-                    <>
-                        <button onClick={handleLogout} className="flex items-center text-green-500">
-                            <img src={userLogo} alt="user icon" className="h-10 mr-2"/>
-                            Déconnexion
-                        </button>
-                    </>
-                ) : (
-                    <button onClick={() => window.location.href = "/login"} className="flex items-center text-green-500">
-                        <img src={userLogo} alt="user icon" className="h-10 mr-2"/>
-                        <p className="text-lg">Connexion</p>
+            <div className="flex items-center mb-4 sm:mb-0">
+                <div className="flex items-center">
+                    {user ? (
+                        <>
+                            <button onClick={() => window.location.href = "/help_points"} className="flex items-center text-green-500">
+                                <p className="text-lg mr-2">{user.point_balance}</p>
+                                <img src={leaveLogo} alt="user icon" className="h-10 mr-8"/>
+                            </button>
+                        </>
+                    ) : (
+                       ""
+                    )}
+                </div>
+                <div className="flex items-center mb-4 sm:mb-0">
+                    <button onClick={() => window.location.href = "/helpdesk"} className="flex items-center text-green-500">
+                        <img src={helpdeskLogo} alt="helpdesk icon" className="h-10 mr-8"/>
                     </button>
-                )}
+                </div>
+                <div className="flex items-center">
+                    {user ? (
+                        <>
+                            <button onClick={handleLogout} className="flex items-center text-green-500">
+                                <img src={userLogo} alt="user icon" className="h-10 mr-2"/>
+                                Déconnexion
+                            </button>
+                        </>
+                    ) : (
+                        <button onClick={() => window.location.href = "/login"} className="flex items-center text-green-500">
+                            <img src={userLogo} alt="user icon" className="h-10 mr-2"/>
+                            <p className="text-lg">Connexion</p>
+                        </button>
+                    )}
+                </div>
             </div>
         </nav>
     );

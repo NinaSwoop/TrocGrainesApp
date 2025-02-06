@@ -52,7 +52,10 @@ class LoginUserService
 
         return new AuthenticatedUserDto(
             email: $user->email(),
-            roles: $user->roles()
+            roles: $user->roles(),
+            id: $user->id(),
+            point_balance: $user->pointBalance()->getValue(),
+            username: $user->username()
         );
     }
 }

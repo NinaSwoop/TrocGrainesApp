@@ -40,6 +40,6 @@ class AuthenticatedUserService
 
         $this->logger->info('User : '.$user->email());
 
-        return new AuthenticatedUserDto($user->email(), $user->roles());
+        return new AuthenticatedUserDto($user->email(), $user->roles(), $user->id(), $user->pointBalance()->getValue(), $user->username());
     }
 }
