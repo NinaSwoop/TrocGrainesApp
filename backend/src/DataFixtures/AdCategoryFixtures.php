@@ -12,11 +12,11 @@ use Doctrine\Persistence\ObjectManager;
 class AdCategoryFixtures extends Fixture implements DependentFixtureInterface
 {
 
-    public const string AD_CATEGORY_PLANTS = 'plants';
-    public const string AD_CATEGORY_CUTTINGS = 'cuttings';
-    public const string AD_CATEGORY_SEEDS = 'seeds';
-    public const string AD_CATEGORY_GARDENING_TOOLS = 'gardening_tools';
-    public const string AD_CATEGORY_CONSUMABLES = 'consumables';
+    public const string AD_CATEGORY_PLANTS = 'plantes';
+    public const string AD_CATEGORY_CUTTINGS = 'boutures';
+    public const string AD_CATEGORY_SEEDS = 'graines';
+    public const string AD_CATEGORY_GARDENING_TOOLS = 'matériel';
+    public const string AD_CATEGORY_CONSUMABLES = 'consommables';
 
     public function getDependencies(): array
     {

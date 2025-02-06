@@ -16,9 +16,9 @@ class Transaction
     #[ORM\ManyToOne(inversedBy: 'transactions')]
     private ?SymfonyUser $recipient = null;
 
-    #[ORM\OneToOne(inversedBy: 'transaction', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Ad $ad = null;
+//    #[ORM\OneToOne(inversedBy: 'transaction', cascade: ['persist', 'remove'])]
+//    #[ORM\JoinColumn(nullable: false)]
+//    private ?Ad $ad = null;
 
     #[ORM\ManyToOne(inversedBy: 'transactions')]
     private ?TransactionStatus $transaction_status = null;

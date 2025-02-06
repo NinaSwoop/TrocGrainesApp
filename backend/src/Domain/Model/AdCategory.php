@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Model;
 
-enum AdCategory
+enum AdCategory: string
 {
-    case PLANTS;
-    case CUTTINGS;
-    case SEEDS;
-    case GARDENING_TOOLS;
-    case CONSUMABLES;
+    case PLANTS = 'plantes';
+    case CUTTINGS = 'boutures';
+    case SEEDS = 'graines';
+    case GARDENING_TOOLS = 'matériel';
+    case CONSUMABLES = 'consommables';
 }

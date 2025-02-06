@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Application;
 
-use App\Domain\Model\User;
 use App\Domain\Exception\InvalidCredentialsException;
 use App\Domain\Repository\UserRepositoryInterface;
 use App\Domain\Security\PasswordHasherInterface;
 use App\Domain\Security\AuthenticatedUserInterface;
-use App\Application\LoginUserDTO;
 use Psr\Log\LoggerInterface;
 
 class LoginUserService

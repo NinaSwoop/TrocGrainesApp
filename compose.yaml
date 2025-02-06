@@ -28,6 +28,7 @@ services:
       - db_url
     environment:
       DATABASE_URL_FILE: /run/secrets/db_url
+      PHP_IDE_CONFIG : serverName=backend
     depends_on:
       - db
 

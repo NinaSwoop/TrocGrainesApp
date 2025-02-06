@@ -33,7 +33,7 @@ class UserFixtures extends Fixture
             $user->setEmail($faker->email());
             $user->setPassword('');
             $user->setBirthdate($faker->dateTimeThisCentury());
-            $user->setPicture('public/placeholder-avatar.jpg');
+            $user->setPicture('');
             $user->setPointBalance(3);
             $user->setRole(['ROLE_USER']);
             $user->setCreatedAt(new \DateTimeImmutable());

@@ -11,6 +11,9 @@ class ApiControllerTest extends TestCase
 {
     public function testReturnJsonMessage(): void
     {
+        var_dump(ini_get("xdebug.mode"));
+        die();
+
         // Arrange
         $apiController = new ApiController();
 

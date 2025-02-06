@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 namespace App\Domain\Model;
-enum AdStatus
+enum AdStatus: string
 {
-    case UNRESERVED;
-    case RESERVED;
+    case UNRESERVED = 'unreserved';
+    case RESERVED = 'reserved';
 }

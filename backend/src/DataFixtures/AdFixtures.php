@@ -42,7 +42,7 @@ class AdFixtures extends Fixture implements DependentFixtureInterface
             $ad = new Ad();
             $ad->setTitle($faker->sentence(2));
             $ad->setDescription($faker->sentence(10));
-            $ad->setPicture('public/placeholder-ad.jpeg');
+            $ad->setPicture('');
             $ad->setLocation($faker->city());
             $ad->setOwner($this->getReference("user_$randomOwnerIndex", SymfonyUser::class));
             $ad->setCategory($this->getReference($adCategories[array_rand($adCategories)], Category::class));
