@@ -1,27 +1,35 @@
 import { useEffect, useState } from "react";
+import Card from "../components/Card.tsx";
+import { Ad } from "../@types/ads";
+import Error from "../components/Error.tsx";
 
 const Home = () => {
-    const [message, setMessage] = useState('');  // Etat pour stocker le message
-    const [loading, setLoading] = useState(true);  // Etat pour savoir si les données sont en cours de chargement
+    const [ads, setAds] = useState<Ad[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        // Faire une requête GET vers l'API Symfony
-        fetch('http://localhost/home')  // URL de ton API Symfony
-            .then(response => response.json())  // Convertir la réponse en JSON
-            .then(data => {
-                setMessage(data.message);  // Mettre à jour l'état avec le message
-                setLoading(false);  // Changer l'état pour indiquer que les données sont chargées
-            })
-            .catch(error => {
-                console.error('Erreur lors de la récupération du message:', error);
-                setLoading(false);
-            });
-    }, []);  // [] signifie que cet effet se déclenche une seule fois après le premier rendu
+        const fetchAds = async () => {
+            try {
+                const response = await fetch('http://localhost/ads');
+                const data = await response.json();
+                console.log(data);
+                setAds(data);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des annonces:", error);
+                setError("Une erreur est survenue lors du chargement des annonces.");
+            }
+        };
 
+        fetchAds().then(r => r);
+    }, []);
     return (
         <div>
-            <h1>Bienvenue sur Troc & Graines</h1>
-            {loading ? <p>Loading...</p> : <p>{message}</p>}  {/* Afficher un message de chargement ou le message */}
+            {error && <Error title="Erreur" text={error} />}
+            <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-5 gap-4 place-items-center">
+                {ads.map((ad) => (
+                    <Card key={ad.id} adCard={ad} />
+                ))}
+            </div>
         </div>
     );
 };
