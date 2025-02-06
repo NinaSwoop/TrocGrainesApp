@@ -34,6 +34,11 @@ class AdFixtures extends Fixture implements DependentFixtureInterface
             AdCategoryFixtures::AD_CATEGORY_CONSUMABLES,
         ];
 
+        $adStatuses = [
+            AdStatusFixtures::UNRESERVED_REFERENCE,
+            AdStatusFixtures::RESERVED_REFERENCE,
+        ];
+
         for ($i = 0; $i < 10; $i++) {
 
             $randomOwnerIndex = rand(0, 9);
@@ -46,7 +51,7 @@ class AdFixtures extends Fixture implements DependentFixtureInterface
             $ad->setLocation($faker->city());
             $ad->setOwner($this->getReference("user_$randomOwnerIndex", SymfonyUser::class));
             $ad->setCategory($this->getReference($adCategories[array_rand($adCategories)], Category::class));
-            $ad->setAdStatus($this->getReference(AdStatusFixtures::UNRESERVED_REFERENCE, AdStatus::class));
+            $ad->setAdStatus($this->getReference($adStatuses[array_rand($adStatuses)], AdStatus::class));
             $ad->setIsActive(true);
             $ad->setCreatedAt(new \DateTimeImmutable());
             $ad->setUpdatedAt(new \DateTimeImmutable());

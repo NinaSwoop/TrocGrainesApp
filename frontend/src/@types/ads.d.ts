@@ -6,7 +6,7 @@ export interface Ad {
     description: string | null;
     location: string;
     picture?: string | null;
-    adStatut: boolean;
+    adStatus: string;
     createdAt: string | null;
     updatedAt?: string | null;
 }

@@ -1,5 +1,4 @@
 import { AdCardProps } from '../@types/ads';
-// import './Card.css';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import placeholder from '../assets/placeholder-ad.webp';
@@ -42,7 +41,7 @@ export default function Card({ adCard, onClick }: AdCardProps) {
     // };
 
     return (
-        <div className="flex justify-between text-center" onClick={onClick}>
+        <div className="flex justify-between text-center relative" onClick={onClick}>
             <div className="flex justify-center bg-beige hover:bg-beige-light border-green-light border-1 shadow-md hover:shadow-m hover:shadow-gray-dark transition-shadow duration-300 rounded-lg p-2 w-60 min-h-80">
                 <div className="">
                     <div className="flex justify-center mt-5">
@@ -135,7 +134,7 @@ export default function Card({ adCard, onClick }: AdCardProps) {
                     {/*    />*/}
                     {/*}*/}
                 </div>
-                {adCard.adStatut && (
+                {adCard.adStatus === "reserved" && (
                     <div className="absolute bottom-0 left-0 w-full bg-green-light py-1 rounded-b-lg text-center text-beige-light hover:text-beige text-xs shadow-md hover:shadow-m hover:shadow-gray-dark transition-shadow duration-300 border-2 border-green-light">
                         Réservé
                     </div>
