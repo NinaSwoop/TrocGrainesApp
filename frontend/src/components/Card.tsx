@@ -1,13 +1,11 @@
 import { AdCardProps } from '../@types/ads';
+import { useNavigate } from 'react-router-dom';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import placeholder from '../assets/placeholder-ad.webp';
-// import Button from '../components/Button';
-// import { useContext } from "react";
-// import { AuthContext } from "../context/AuthContext";
-// import { useAuth } from "../context/AuthContext";
 
-export default function Card({ adCard, onClick }: AdCardProps) {
+export default function Card({ adCard }: AdCardProps) {
+    const navigate = useNavigate();
     const imageUrl = adCard.picture ? adCard.picture : placeholder;
     const createdAt = adCard.createdAt ? parseISO(adCard.createdAt) : new Date();
     const timeAgo = formatDistanceToNow(createdAt, {
@@ -15,33 +13,13 @@ export default function Card({ adCard, onClick }: AdCardProps) {
         locale: fr,
     });
 
-    // const { user } = useAuth();
+    const handleCardClick = () => {
+        navigate(`/ad/${adCard.id}`);
+    };
 
-    // const handleDeleteButton = async () => {
-    //     try {
-    //         if (!token) {
-    //             throw new Error("Token manquant ou invalide.");
-    //         }
-    //
-    //         const response = await fetch(`${import.meta.env.VITE_API_URL_BUSINESS}/api-business/ads/${adCard.ad_id}`, {
-    //             method: "DELETE",
-    //             headers: {
-    //                 authorization: `Bearer ${token}`,
-    //             },
-    //         });
-    //
-    //         if (!response.ok) {
-    //             throw new Error(`Echec de la supression. Statut : ${response.status} ${response.statusText}`);
-    //         }
-    //
-    //         if(onDelete) onDelete();
-    //     } catch (error) {
-    //         console.error("Erreur lors de la supression ", (error as Error).message);
-    //     }
-    // };
 
     return (
-        <div className="flex justify-between text-center relative" onClick={onClick}>
+        <div className="flex justify-between text-center relative cursor-pointer" onClick={handleCardClick}>
             <div className="flex justify-center bg-beige hover:bg-beige-light border-green-light border-1 shadow-md hover:shadow-m hover:shadow-gray-dark transition-shadow duration-300 rounded-lg p-2 w-60 min-h-80">
                 <div className="">
                     <div className="flex justify-center mt-5">
@@ -121,18 +99,6 @@ export default function Card({ adCard, onClick }: AdCardProps) {
                     <div className="text-center text-green-dark">
                         <span>Catégorie : {adCard.category}</span>
                     </div>
-                    {/*{*/}
-                    {/*    onDelete &&*/}
-                    {/*    <Button*/}
-                    {/*        text="Supprimer"*/}
-                    {/*        type="button"*/}
-                    {/*        className="bg-red hover:bg-beige hover:text-red text-beige font-bold mb-6"*/}
-                    {/*        onClick={(event: React.MouseEvent<HTMLButtonElement>) => {*/}
-                    {/*            event.stopPropagation();*/}
-                    {/*            handleDeleteButton();*/}
-                    {/*        }}*/}
-                    {/*    />*/}
-                    {/*}*/}
                 </div>
                 {adCard.adStatus === "reserved" && (
                     <div className="absolute bottom-0 left-0 w-full bg-green-light py-1 rounded-b-lg text-center text-beige-light hover:text-beige text-xs shadow-md hover:shadow-m hover:shadow-gray-dark transition-shadow duration-300 border-2 border-green-light">
