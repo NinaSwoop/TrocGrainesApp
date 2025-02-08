@@ -164,7 +164,7 @@ const Home = () => {
                                 <Button
                                     type="button"
                                     text="Créer une annonce"
-                                    className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold mt-2 text-center ml-2 text-xs"
+                                    className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold mt-2 text-center ml-2 lg:text-base lg:mt-0 lg:ml-4"
                                 />
                             </Link> )}
                     </div>
