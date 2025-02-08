@@ -9,8 +9,8 @@
 
   color-scheme: light;
   color: #395144;
-  background-color:rgba(240, 235, 206, 0.5);
-
+  /*background-color:rgba(240, 235, 206, 0.5);*/
+    background-color: rgba(71, 135, 70, 0.5);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

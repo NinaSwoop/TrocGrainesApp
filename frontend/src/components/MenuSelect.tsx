@@ -14,7 +14,7 @@ export default function MenuSelect({
     return (
         <div className="inline-block relative w-64">
             <select
-                className="block appearance-none w-full bg-beige-less-transparent border border-green-light-transparent hover:border-green-dark px-4 py-2 pr-8 rounded leading-tight shadow focus:ring focus:ring-green-light focus:ring-1 focus:shadow-lg focus:outline-none"
+                className="block appearance-none w-full bg-beige border border-green-light-transparent hover:border-green-dark px-4 py-2 pr-8 rounded leading-tight shadow focus:ring-green-light focus:ring-1 focus:shadow-lg focus:outline-none"
                 onChange={(e) => onChange(e.target.value)}
                 name={name}
                 required={required}

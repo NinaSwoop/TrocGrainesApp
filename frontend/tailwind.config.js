@@ -8,6 +8,7 @@ export default {
       'green-dark-transparent': 'rgba(57, 81, 68, 0.5)',
       'green-light': '#478746',
       'green-light-transparent': 'rgba(71, 135, 70, 0.5)',
+      'green-search-background': '#74a26e',
       beige: '#F0EBCE',
       'beige-transparent': 'rgba(240, 235, 206, 0.5)',
       'beige-less-transparent': 'rgba(240, 235, 206, 0.3)',

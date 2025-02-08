@@ -8,9 +8,3 @@ html, body, #root {
   height: 100%;
   width: 100%;
 }
-
-main {
-  /*min-height: calc(100vh - 50px);*/
-  /*padding: 20px;*/
-  background-color: rgba(71, 135, 70, 0.5);
-}

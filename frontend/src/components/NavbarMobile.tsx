@@ -23,7 +23,7 @@ export default function NavbarMobile() {
     };
 
     return (
-        <nav className="border-b border-green-darker p-4 md:hidden">
+        <nav className="border-b border-green-darker p-4 md:hidden bg-beige fixed z-50 w-full">
             <p className="text-m text-center mb-2">TROC & GRAINES</p>
             <div className="flex justify-between">
                 <a href="/" className="flex items-center">
@@ -33,7 +33,7 @@ export default function NavbarMobile() {
                 {user ? (
                     <button onClick={() => window.location.href = "/profile"} className="flex items-center green-darker">
                         <p className="text-l mr-2">{user.username}</p>
-                        <img src={placeholder} alt="avatar of plant" className="h-10 cursor-pointer aspect-square rounded-4xl"/>
+                        <img src={placeholder} alt="avatar of plant" className="h-10 w-10 cursor-pointer rounded-full"/>
                     </button>
                 ) : (
                     ""
@@ -41,21 +41,21 @@ export default function NavbarMobile() {
 
                 <section className="flex items-center">
                     <div
-                        className="space-y-2"
+                        className="space-y-2 "
                         onClick={() => setIsNavOpen((prev) => !prev)}
                     >
-                        <span className="block h-0.5 w-8 bg-green-950"></span>
-                        <span className="block h-0.5 w-8 bg-green-950"></span>
-                        <span className="block h-0.5 w-8 bg-green-950"></span>
+                        <span className="block h-0.5 w-8 bg-green-dark"></span>
+                        <span className="block h-0.5 w-8 bg-green-dark"></span>
+                        <span className="block h-0.5 w-8 bg-green-dark"></span>
                     </div>
 
                     <div className={isNavOpen ? "showMenuNav" : "hideMenuNav"}>
                         <div
-                            className="absolute top-0 right-0 px-8 py-8"
+                            className="absolute top-0 right-0 px-8 py-8 bg-beige"
                             onClick={() => setIsNavOpen(false)}
                         >
                             <svg
-                                className="h-8 w-8 text-green-darkest"
+                                className="h-8 w-8"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 stroke="currentColor"
