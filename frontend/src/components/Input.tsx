@@ -23,8 +23,7 @@ export default function Input({
                 {label}
             </label>
             <input
-                className="block appearance-none w-full bg-beige-less-transparent border border-green-light-transparent hover:border-green-dark px-4 py-2 pr-8 rounded leading-tight shadow focus:ring focus:ring-green-light focus:ring-1 focus:shadow-lg focus:outline-none"
-                // id={label}
+                className="block appearance-none bg-beige-light w-full border border-green-light-transparent hover:border-green-dark px-4 py-2 pr-8 rounded leading-tight shadow focus:ring focus:ring-green-light focus:shadow-lg focus:outline-none"
                 type={type}
                 placeholder={placeholder}
                 onChange={(e) => onChange(e.target.value)}

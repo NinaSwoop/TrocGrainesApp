@@ -13,16 +13,18 @@ function App() {
     return (
     <>
         <AuthProvider>
-            <Navbar />
-            <NavbarMobile />
-            <main className="">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                </Routes>
-            </main>
-            <Footer />
+            <div className="min-h-screen flex flex-col">
+                <Navbar />
+                <NavbarMobile />
+                <main className="flex-grow">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                    </Routes>
+                </main>
+                <Footer />
+            </div>
         </AuthProvider>
     </>
   );

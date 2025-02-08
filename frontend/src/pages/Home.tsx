@@ -81,7 +81,7 @@ const Home = () => {
     };
 
     return (
-        <div>
+        <div className="min-h-screen flex flex-col">
             {error && <Error title="Erreur" text={error} />}
             <div className="top-[10rem] w-full z-10 md:top-[5rem] pt-[8rem] md:pt-[10rem]">
                 <div className="fixed top-[6rem] md:top-[4.5rem] left-0 w-full bg-green-search-background p-4 z-40 lg:flex lg:justify-around lg:items-center">
@@ -170,7 +170,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-7 place-items-center pt-[11rem] md:pt-[8rem] md:mr-5 md:ml-5 lg:mr-10 lg:ml-10 lg:gap-10 lg:pt-[4rem] xl:gap-4">
+                <div className="flex-grow mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-7 place-items-center pt-[11rem] md:pt-[8rem] md:mr-5 md:ml-5 lg:mr-10 lg:ml-10 lg:gap-10 lg:pt-[4rem] xl:gap-4">
                     {loading ? (
                         <p>Chargement des annonces...</p>
                     ) : filteredAds.length > 0 ? (

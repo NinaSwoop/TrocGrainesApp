@@ -48,49 +48,51 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-xl h-auto bg-beige-light p-10 rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold mb-6 text-center text-green-dark" data-cy="connexion-title">
-                    Connectez-vous
-                </h2>
-                <form onSubmit={handleSubmit} noValidate>
-                    <div className="mb-4">
-                        <Input
-                            label="Email"
-                            type="email"
-                            placeholder="email@email.com"
-                            value={email}
-                            onChange={setEmail}
-                            required={true}
-                        />
-                        {errors.email && <Error title="Erreur" text={errors.email} />}
-                    </div>
-                    <div className="mb-6">
-                        <Input
-                            label="Mot de passe"
-                            type="password"
-                            placeholder="********"
-                            value={password}
-                            onChange={setPassword}
-                            required={true}
-                        />
-                        {errors.password && <Error title="Erreur" text={errors.password} />}
-                    </div>
-                    <div className="mt-5 mb-5">
-                        <a href="/register"
-                           className="text sm text-green-dark text-decoration-line: underline">
-                            Pas encore inscrit ? Créer un compte
-                        </a>
-                    </div>
-                    {error && <Error title="Erreur" text={error} />}
-                    <div className="flex items-center justify-center">
-                        <Button
-                            text="Connexion"
-                            type="submit"
-                            className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold"
-                        />
-                    </div>
-                </form>
+        <div className="h-screen flex flex-col bg-gray-100">
+            <div className="flex-grow flex items-center justify-center">
+                <div className="max-w-xl h-auto bg-beige p-10 rounded-lg shadow-md">
+                    <h2 className="text-2xl font-bold mb-6 text-center text-green-dark" data-cy="connexion-title">
+                        Connectez-vous
+                    </h2>
+                    <form onSubmit={handleSubmit} noValidate>
+                        <div className="mb-4 text-sm lg:text-base">
+                            <Input
+                                label="Email"
+                                type="email"
+                                placeholder="email@email.com"
+                                value={email}
+                                onChange={setEmail}
+                                required={true}
+                            />
+                            {errors.email && <Error title="Erreur" text={errors.email} />}
+                        </div>
+                        <div className="mb-6 text-sm lg:text-base">
+                            <Input
+                                label="Mot de passe"
+                                type="password"
+                                placeholder="********"
+                                value={password}
+                                onChange={setPassword}
+                                required={true}
+                            />
+                            {errors.password && <Error title="Erreur" text={errors.password} />}
+                        </div>
+                        <div className="mt-5 mb-5">
+                            <a href="/register"
+                               className="text sm text-green-dark text-decoration-line: underline text-sm lg:text-base">
+                                Pas encore inscrit ? Créer un compte
+                            </a>
+                        </div>
+                        {error && <Error title="Erreur" text={error} />}
+                        <div className="flex items-center justify-center">
+                            <Button
+                                text="Connexion"
+                                type="submit"
+                                className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold text-sm lg:text-base"
+                            />
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     );
