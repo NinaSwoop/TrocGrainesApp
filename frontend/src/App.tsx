@@ -6,6 +6,7 @@ import Register from "./pages/Register.tsx";
 import Navbar from "./components/Navbar.tsx";
 import Footer from "./components/Footer.tsx";
 import {AuthProvider} from "./context/AuthContext.tsx";
+import NavbarMobile from "./components/NavbarMobile.tsx";
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
     <>
         <AuthProvider>
             <Navbar />
+            <NavbarMobile />
             <main className="">
                 <Routes>
                     <Route path="/" element={<Home />} />
