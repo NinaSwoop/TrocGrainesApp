@@ -24,8 +24,7 @@ const Home = () => {
 
         if (searchTerm) {
             filtered = filtered.filter(ad =>
-                ad.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                (ad.description && ad.description.toLowerCase().includes(searchTerm.toLowerCase()))
+                ad.title.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
 
@@ -84,39 +83,48 @@ const Home = () => {
     return (
         <div>
             {error && <Error title="Erreur" text={error} />}
-
-            <div>
-                <div className="mx-auto w-full bg-green-dark pt-24 fixed top-0 z-10 flex flex-col md:flex-row justify-between items-center my-4 mr-4 space-y-2 md:space-y-0 md:space-x-4">
-                    <div className="md:w-1/4 relative w-full max-w-md transition-all duration-300">
+            <div className="top-[10rem] w-full z-10 md:top-[5rem]">
+                <div className="bg-green-darker z-20 p-4">
+                    <div className="relative flex md:flex-row md:items-center md:space-x-4 items-center mb-2">
                         <input
                             type="text"
-                            placeholder="Rechercher par titre ou description..."
+                            placeholder="Rechercher par titre..."
                             value={searchTerm}
                             onChange={handleSearchChange}
                             className="w-full pl-10 pr-4 py-2 rounded-lg block appearance-none bg-beige-less-transparent border border-green-light-transparent hover:border-green-dark px-4 leading-tight shadow focus:ring focus:ring-green-light focus:shadow-lg focus:outline-none"
                         />
-                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center">
-                            <svg
-                                className="h-5 w-5 text-green-dark"
-                                fill="none"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                                />
-                            </svg>
-                        </div>
+                        <svg
+                            className="absolute h-5 w-5"
+                            fill="none"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                            />
+                        </svg>
                     </div>
-
-                    <input
-                        type="text"
-                        placeholder="Rechercher par localisation..."
-                        value={locationSearch}
-                        onChange={handleLocationSearchChange}
-                        className="md:w-1/4 py-2 px-4 rounded block appearance-none w-full bg-beige-less-transparent border border-green-light-transparent hover:border-green-dark pr-8 leading-tight shadow focus:ring focus:ring-green-light focus:shadow-lg focus:outline-none"
-                    />
+                    <div className="relative flex md:flex-row md:items-center md:space-x-4 items-center mb-2">
+                        <input
+                            type="text"
+                            placeholder="Rechercher par localisation..."
+                            value={locationSearch}
+                            onChange={handleLocationSearchChange}
+                            className="w-full pl-10 pr-4 py-2 rounded-lg block appearance-none bg-beige-less-transparent border border-green-light-transparent hover:border-green-dark px-4 leading-tight shadow focus:ring focus:ring-green-light focus:shadow-lg focus:outline-none"
+                        />
+                        <svg
+                            className="absolute h-5 w-5"
+                            fill="none"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                            />
+                        </svg>
+                    </div>
 
                     <MenuSelect
                         options={[
@@ -159,16 +167,16 @@ const Home = () => {
                             />
                         </Link> )}
                 </div>
-            </div>
 
-            <div className="pt-32 container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-5 gap-4 place-items-center">
-                {loading ? (
-                    <p>Chargement des annonces...</p>
-                ) : filteredAds.length > 0 ? (
-                    filteredAds.map((ad) => <Card key={ad.id} adCard={ad} />)
-                ) : (
-                    <p>Aucune annonce trouvée.</p>
-                )}
+                <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 place-items-center">
+                    {loading ? (
+                        <p>Chargement des annonces...</p>
+                    ) : filteredAds.length > 0 ? (
+                        filteredAds.map((ad) => <Card key={ad.id} adCard={ad} />)
+                    ) : (
+                        <p>Aucune annonce trouvée.</p>
+                    )}
+                </div>
             </div>
         </div>
     );
