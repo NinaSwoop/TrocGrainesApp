@@ -3,6 +3,7 @@ export default {
   content: ['./public/index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     colors: {
+      'green-darker': '#48752C',
       'green-dark': '#395144',
       'green-dark-transparent': 'rgba(57, 81, 68, 0.5)',
       'green-light': '#478746',
