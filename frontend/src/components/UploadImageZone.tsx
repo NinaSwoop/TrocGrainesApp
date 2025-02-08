@@ -30,7 +30,7 @@ export default function UploadImageZone({
 
 
     return (
-        <div className="flex items-center justify-center w-full">
+        <div className="flex items-center justify-center w-full mb-4">
             <label
                 htmlFor="dropzone-file"
                 className="flex flex-col items-center justify-center w-full h-64 border-2 border-green-light-transparent border-dashed rounded-lg cursor-pointer bg-beige-less-transparent hover:bg-beige-transparent"
