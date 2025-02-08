@@ -19,12 +19,12 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="bg-amber-500 p-4 hidden md:block">
+        <nav className="bg-beige p-4 hidden md:block fixed z-50 w-full top-0 left-0">
             <div className="flex justify-between">
                 <div className="">
                     <a href="/" className="flex items-center">
                         <img src={logo} alt="logo" className="h-10"/>
-                        <p className="text-l">TROC & GRAINES</p>
+                        <p className="md:text-sm lg:text-base">TROC & GRAINES</p>
                     </a>
                 </div>
                 <div className="flex items-center">
@@ -32,8 +32,8 @@ export default function Navbar() {
                         <div className="flex items-center">
                             {user ? (
                                 <button onClick={() => window.location.href = "/profile"} className="flex items-center green-darker">
-                                    <p className="text-m mr-2">{user.username}</p>
-                                    <img src={placeholder} alt="avatar of plant" className="h-10 mr-8 cursor-pointer aspect-square rounded-4xl"/>
+                                    <p className="md:text-sm lg:text-base mr-2">{user.username}</p>
+                                    <img src={placeholder} alt="avatar of plant" className="h-10 w-10 cursor-pointer rounded-full mr-8"/>
                                 </button>
                             ) : (
                                 ""
@@ -42,7 +42,7 @@ export default function Navbar() {
                         <div className="">
                             {user ? (
                                     <button onClick={() => window.location.href = "/help_points"} className="flex items-center green-darker">
-                                        <p className="text-l mr-2">{user.point_balance}</p>
+                                        <p className="md:text-sm lg:text-base mr-2">{user.point_balance}</p>
                                         <img src={leaveLogo} alt="leave icon" className="h-7 mr-8 cursor-pointer"/>
                                     </button>
                             ) : (
@@ -54,7 +54,7 @@ export default function Navbar() {
                     <div className="">
                         <button onClick={() => window.location.href = "/helpdesk"} className="flex items-center green-darker cursor-pointer">
                             <img src={helpdeskLogo} alt="helpdesk icon" className="h-10 mr-2"/>
-                            <p className="text-l mr-8">Guide</p>
+                            <p className="md:text-sm lg:text-base mr-8">Guide</p>
                         </button>
                     </div>
                     <div className="">
@@ -62,13 +62,13 @@ export default function Navbar() {
                             <>
                                 <button onClick={handleLogout} className="flex items-center green-darker cursor-pointer">
                                     <img src={userLogo} alt="user icon" className="h-10 mr-2"/>
-                                    <p className="text-l">Déconnexion</p>
+                                    <p className="md:text-sm lg:text-base">Déconnexion</p>
                                 </button>
                             </>
                         ) : (
                             <button onClick={() => window.location.href = "/login"} className="flex items-center green-darker cursor-pointer">
-                                <img src={userLogo} alt="user icon" className="h-5 mr-2"/>
-                                <p className="text-l">Connexion</p>
+                                <img src={userLogo} alt="user icon" className="h-10 mr-2"/>
+                                <p className="md:text-sm lg:text-base">Connexion</p>
                             </button>
                         )}
                     </div>

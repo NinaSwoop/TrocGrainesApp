@@ -83,35 +83,36 @@ const Home = () => {
     return (
         <div>
             {error && <Error title="Erreur" text={error} />}
-            <div className="top-[10rem] w-full z-10 md:top-[5rem] pt-[8rem]">
-                <div className="fixed top-[6rem] left-0 w-full bg-green-search-background p-4 z-40">
-                    <div className="relative flex md:flex-row md:items-center md:space-x-4 items-center mb-2">
-                        <input
-                            type="text"
-                            placeholder="Rechercher par titre..."
-                            value={searchTerm}
-                            onChange={handleSearchChange}
-                            className="w-full pl-10 pr-4 py-2 rounded-lg block appearance-none bg-beige border border-green-light-transparent hover:border-green-dark px-4 leading-tight shadow focus:ring focus:ring-green-light focus:shadow-lg focus:outline-none"
-                        />
-                        <svg
-                            className="absolute h-5 w-5 ml-2"
-                            fill="none"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+            <div className="top-[10rem] w-full z-10 md:top-[5rem] pt-[8rem] md:pt-[10rem]">
+                <div className="fixed top-[6rem] md:top-[4.5rem] left-0 w-full bg-green-search-background p-4 z-40 lg:flex lg:justify-around lg:items-center">
+                    <div className="lg:flex lg:flex-col ">
+                        <div className="relative flex md:flex-row md:items-center md:space-x-4 items-center mb-2 lg:w-full">
+                            <input
+                                type="text"
+                                placeholder="Rechercher par titre..."
+                                value={searchTerm}
+                                onChange={handleSearchChange}
+                                className="w-full pl-10 pr-4 py-2 rounded-lg block appearance-none bg-beige border border-green-light-transparent hover:border-green-dark px-4 leading-tight shadow focus:ring focus:ring-green-light focus:shadow-lg focus:outline-none text-sm lg:text-base"
                             />
-                        </svg>
-                    </div>
-                    <div className="relative flex md:flex-row md:items-center md:space-x-4 items-center mb-2">
+                            <svg
+                                className="absolute h-5 w-5 ml-2"
+                                fill="none"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                                />
+                            </svg>
+                        </div>
+                        <div className="relative flex md:flex-row md:items-center md:space-x-4 items-center mb-2 lg:w-full">
                         <input
                             type="text"
                             placeholder="Rechercher par localisation..."
                             value={locationSearch}
                             onChange={handleLocationSearchChange}
-                            className="w-full pl-10 pr-4 py-2 rounded-lg block appearance-none bg-beige border border-green-light-transparent hover:border-green-dark px-4 leading-tight shadow focus:ring focus:ring-green-light focus:shadow-lg focus:outline-none"
+                            className="w-full pl-10 pr-4 py-2 rounded-lg block appearance-none bg-beige border border-green-light-transparent hover:border-green-dark px-4 leading-tight shadow focus:ring focus:ring-green-light focus:shadow-lg focus:outline-none text-sm lg:text-base"
                         />
                         <svg
                             className="absolute h-5 w-5 ml-2"
@@ -125,7 +126,7 @@ const Home = () => {
                             />
                         </svg>
                     </div>
-
+                    </div>
                     <MenuSelect
                         options={[
                             { value: "", label: "Toutes les catégories" },
@@ -137,38 +138,39 @@ const Home = () => {
                         onChange={(value: string) => setSelectedCategory(value)}
                         name="menuSelect"
                     />
+                    <div className="flex flex-row justify-between lg:flex-row lg:justify-between">
+                        <Button
+                            type="button"
+                            text="Non réservé"
+                            className={`rounded ${
+                                activeButton === "unreserved"
+                                    ? "bg-green-light text-beige hover:bg-beige hover:text-green-light mt-2 font-bold lg:m-0 text-center text-sm lg:text-base"
+                                    : "bg-beige text-green-light hover:bg-green-light hover:text-beige mt-2 lg:m-0 text-center text-sm lg:text-base"
+                            }`}
+                            onClick={handleButtonClick}
+                        />
 
-                    <Button
-                        type="button"
-                        text="Non réservé"
-                        className={`rounded ${
-                            activeButton === "unreserved"
-                                ? "bg-green-light text-beige hover:bg-beige hover:text-green-light mt-2 mr-2 font-bold"
-                                : "bg-beige text-green-light hover:bg-green-light hover:text-beige mt-2 mr-2"
-                        }`}
-                        onClick={handleButtonClick}
-                    />
+                        {user ? (
+                            <Link to={"/create-ad"}>
 
-                    {user ? (
-                        <Link to={"/create-ad"}>
+                                <Button
+                                    type="button"
+                                    text="Créer une annonce"
+                                    className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold mt-2 text-center ml-2 text-sm lg:text-base lg:mt-0 lg:ml-4"
+                                />
+                            </Link> ) : (
+                            <Link to={"/login"}>
 
-                            <Button
-                                type="button"
-                                text="Créer une annonce"
-                                className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold"
-                            />
-                        </Link> ) : (
-                        <Link to={"/login"}>
-
-                            <Button
-                                type="button"
-                                text="Créer une annonce"
-                                className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold"
-                            />
-                        </Link> )}
+                                <Button
+                                    type="button"
+                                    text="Créer une annonce"
+                                    className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold mt-2 text-center ml-2 text-xs"
+                                />
+                            </Link> )}
+                    </div>
                 </div>
 
-                <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 place-items-center pt-[14rem]">
+                <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-7 place-items-center pt-[11rem] md:pt-[8rem] md:mr-5 md:ml-5 lg:mr-10 lg:ml-10 lg:gap-10 lg:pt-[4rem] xl:gap-4">
                     {loading ? (
                         <p>Chargement des annonces...</p>
                     ) : filteredAds.length > 0 ? (

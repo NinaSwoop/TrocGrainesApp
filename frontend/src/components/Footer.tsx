@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import leaveLogo from '../assets/leave.svg';
 export default function Footer() {
     return (
-        <div className='w-full bottom-0 bg-beige z-50 mt-4'>
+        <div className='w-full bottom-0 bg-beige z-50 mt-4 lg:flex lg:justify-around lg:items-center lg:px-8 lg:py-4 text-sm lg:text-base'>
             <div className='flex justify-center text-decoration-line: underline'>
                 <Link to='/cgu'>CGU</Link>
             </div>

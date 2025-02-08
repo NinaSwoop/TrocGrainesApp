@@ -19,8 +19,8 @@ export default function Card({ adCard }: AdCardProps) {
 
 
     return (
-        <div className="flex justify-between text-center relative cursor-pointer" onClick={handleCardClick}>
-            <div className="flex justify-center bg-beige hover:bg-beige-light border-green-light border-1 shadow-md hover:shadow-m hover:shadow-gray-dark transition-shadow duration-300 rounded-lg p-2 w-60 min-h-80">
+        <div className="flex justify-between text-center relative cursor-pointer text-sm lg:text-base" onClick={handleCardClick}>
+            <div className="flex justify-center bg-beige hover:bg-beige-light border-green-light border-1 shadow-md hover:shadow-m hover:shadow-gray-dark transition-shadow duration-300 rounded-lg p-2 md:p-0 w-60 min-h-80">
                 <div className="">
                     <div className="flex justify-center mt-5">
                         <img
@@ -29,7 +29,7 @@ export default function Card({ adCard }: AdCardProps) {
                             className="size-32 rounded-t-lg"
                         />
                     </div>
-                    <h3 className="text-green-dark font-bold mt-2">
+                    <h3 className="text-green-dark font-bold mt-2 lg:mt-0">
                         {adCard.title}
                     </h3>
                     <div className="flex items-center justify-center text-green-dark mt-3">
