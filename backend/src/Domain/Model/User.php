@@ -12,7 +12,7 @@ class User
     private string $lastname;
     private string $email;
     private \DateTime $birthdate;
-    private string $picture;
+    private ?string $picture;
     private string $password;
     private PointBalance $pointBalance;
     private TransactionRole $transactionRole;
@@ -28,7 +28,7 @@ class User
         string $lastname,
         string $email,
         \DateTime $birthdate,
-        string $picture,
+        ?string $picture,
         string $password,
         PointBalance $pointBalance,
         array $roles,
@@ -79,7 +79,7 @@ class User
         return $this->birthdate;
     }
 
-    public function picture(): string
+    public function picture(): string | null
     {
         return $this->picture;
     }
