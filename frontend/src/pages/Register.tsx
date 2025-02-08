@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, {useState, useContext} from 'react';
 import Error from '../components/Error.tsx';
 import Button from "../components/Button.tsx";
 import Input from "../components/Input.tsx";
@@ -16,7 +16,7 @@ export default function RegistrationPage() {
     const [pictureUrl, setPictureUrl] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
-    const { register }  = useContext(AuthContext);
+    const {register} = useContext(AuthContext);
 
     const validateForm = () => {
         let valid = true;
@@ -100,8 +100,8 @@ export default function RegistrationPage() {
             valid = false;
         }
 
-        if(picture) {
-            switch(picture.type) {
+        if (picture) {
+            switch (picture.type) {
                 case 'image/jpeg':
                 case 'image/jpg':
                 case 'image/png' :
@@ -175,130 +175,114 @@ export default function RegistrationPage() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex items-center justify-center bg-gray-100">
             <div className="w-full max-w-xl h-auto bg-beige-light p-10 rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold mb-6 text-center text-green-dark">
                     S'inscrire
                 </h2>
                 <form encType="multipart/form-data" onSubmit={handleSubmit} noValidate>
                     <div className="columns-2">
-                        <div className="mb-4">
-                            <Input
-                                label="Nom d'utilisateur"
-                                type="text"
-                                placeholder="Votre nom d'utilisateur"
-                                value={username}
-                                onChange={setUsername}
-                                required={true}
-                                aria-describedby="username"
-                            />
-                            {errors.username && <Error title="Erreur" text={errors.username} />}
-                            {errors.usernameRegex && <Error title="Erreur" text={errors.usernameRegex} />}
-                            {errors.usernameLength && <Error title="Erreur" text={errors.usernameLength} />}
-                        </div>
-                        <div className="mb-4">
-                            <Input
-                                label="Nom"
-                                type="text"
-                                placeholder="Votre nom"
-                                value={lastname}
-                                onChange={setLastname}
-                                required={true}
-                                aria-describedby="lastname"
-                            />
-                            {errors.lastname && <Error title="Erreur" text={errors.lastname} />}
-                            {errors.lastnameRegex && <Error title="Erreur" text={errors.lastnameRegex} />}
-                            {errors.lastnameLength && <Error title="Erreur" text={errors.lastnameLength} />}
-                        </div>
-                    </div>
-                    <div className="columns-2">
-                        <div className="mb-4">
-                            <Input
-                                label="Prénom"
-                                type="text"
-                                placeholder="Votre prénom"
-                                value={firstname}
-                                onChange={setFirstname}
-                                required={true}
-                                aria-describedby="firstname"
-                            />
-                            {errors.firstname && <Error title="Erreur" text={errors.firstname} />}
-                            {errors.firstnameRegex && <Error title="Erreur" text={errors.firstnameRegex} />}
-                            {errors.firstnameLength && <Error title="Erreur" text={errors.firstnameLength} />}
-                        </div>
-                        <div className="mb-4">
-                            <Input
-                                label="Email"
-                                type="email"
-                                placeholder="Votre email"
-                                value={email}
-                                onChange={setEmail}
-                                required={true}
-                                aria-describedby="email"
-                            />
-                            {errors.email && <Error title="Erreur" text={errors.email} />}
-                            {errors.emailNotComplete && <Error title="Erreur" text={errors.emailNotComplete} />}
-                        </div>
-                    </div>
-                    <div className="mb-4">
                         <Input
-                            label="Mot de passe"
-                            type="password"
-                            placeholder="********"
-                            value={password}
-                            onChange={setPassword}
+                            label="Nom d'utilisateur"
+                            type="text"
+                            placeholder="Votre nom d'utilisateur"
+                            value={username}
+                            onChange={setUsername}
                             required={true}
-                            aria-describedby="password"
+                            aria-describedby="username"
                         />
-                        {errors.password && <Error title="Erreur" text={errors.password} />}
-                        {errors.passwordLength && <Error title="Erreur" text={errors.passwordLength} />}
-                    </div>
-                    <div className="mb-4">
+                        {errors.username && <Error title="Erreur" text={errors.username}/>}
+                        {errors.usernameRegex && <Error title="Erreur" text={errors.usernameRegex}/>}
+                        {errors.usernameLength && <Error title="Erreur" text={errors.usernameLength}/>}
                         <Input
-                            label="Date de naissance"
-                            type="date"
-                            value={birthdate}
-                            onChange={setBirthdate}
+                            label="Nom"
+                            type="text"
+                            placeholder="Votre nom"
+                            value={lastname}
+                            onChange={setLastname}
                             required={true}
-                            placeholder="Votre date de naissance"
-                            aria-describedby="birthdate"
+                            aria-describedby="lastname"
                         />
-                        {errors.birthdate && <Error title="Erreur" text={errors.birthdate} />}
-                        {errors.birthdateRegex && <Error title="Erreur" text={errors.birthdateRegex} />}
-                    </div>
-                    <div className="mb-4">
-                        <label
-                            className="block text-green-dark text-sm font-bold mb-2"
-                            htmlFor="picture"
-                        >
-                            Photo de profil (optionnel)
-                        </label>
-                        <UploadImageZone
-                            label="picture"
-                            type="file"
-                            onChange={handlePictureChange}
-                            accept="image/png, image/jpeg, image/svg+xml, image/webp"
-                            placeholder="picture"
-                            required={false}
-                            value={picture}
-                            aria-describedby="picture"
+                        {errors.lastname && <Error title="Erreur" text={errors.lastname}/>}
+                        {errors.lastnameRegex && <Error title="Erreur" text={errors.lastnameRegex}/>}
+                        {errors.lastnameLength && <Error title="Erreur" text={errors.lastnameLength}/>}
+                        <Input
+                            label="Prénom"
+                            type="text"
+                            placeholder="Votre prénom"
+                            value={firstname}
+                            onChange={setFirstname}
+                            required={true}
+                            aria-describedby="firstname"
                         />
-                        {errors.pictureType && <Error title="Erreur" text={errors.pictureType} />}
+                        {errors.firstname && <Error title="Erreur" text={errors.firstname}/>}
+                        {errors.firstnameRegex && <Error title="Erreur" text={errors.firstnameRegex}/>}
+                        {errors.firstnameLength && <Error title="Erreur" text={errors.firstnameLength}/>}
+                        <Input
+                            label="Email"
+                            type="email"
+                            placeholder="Votre email"
+                            value={email}
+                            onChange={setEmail}
+                            required={true}
+                            aria-describedby="email"
+                        />
+                        {errors.email && <Error title="Erreur" text={errors.email}/>}
+                        {errors.emailNotComplete && <Error title="Erreur" text={errors.emailNotComplete}/>}
                     </div>
+                    <Input
+                        label="Mot de passe"
+                        type="password"
+                        placeholder="********"
+                        value={password}
+                        onChange={setPassword}
+                        required={true}
+                        aria-describedby="password"
+                    />
+                    {errors.password && <Error title="Erreur" text={errors.password}/>}
+                    {errors.passwordLength && <Error title="Erreur" text={errors.passwordLength}/>}
+                    <Input
+                        label="Date de naissance"
+                        type="date"
+                        value={birthdate}
+                        onChange={setBirthdate}
+                        required={true}
+                        placeholder="Votre date de naissance"
+                        aria-describedby="birthdate"
+                    />
+                    {errors.birthdate && <Error title="Erreur" text={errors.birthdate}/>}
+                    {errors.birthdateRegex && <Error title="Erreur" text={errors.birthdateRegex}/>}
+                    <label
+                        className="block text-green-dark text-sm font-bold mb-2"
+                        htmlFor="picture"
+                    >
+                        Photo de profil (optionnel)
+                    </label>
+                    <UploadImageZone
+                        label="picture"
+                        type="file"
+                        onChange={handlePictureChange}
+                        accept="image/png, image/jpeg, image/svg+xml, image/webp"
+                        placeholder="picture"
+                        required={false}
+                        value={picture}
+                        aria-describedby="picture"
+                    />
+                    {errors.pictureType && <Error title="Erreur" text={errors.pictureType}/>}
                     <div className="mt-5 mb-5">
                         <a href="/login"
                            className="text sm text-green-dark text-decoration-line: underline">
                             Déjà inscrit ? Connectez-vous
                         </a>
                     </div>
-                    {error && <Error title="Erreur" text={error} />}
-                    <div className="flex items-center justify-center">
-                        <Button
-                            text="Inscription"
-                            type="submit"
-                            className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold"
-                        />
-                    </div>
+                    {error && <Error title="Erreur" text={error}/>}
+                    {/*<div className="">*/}
+                    {/*<div className="flex justify-center">*/}
+                    <Button
+                        text="Inscription"
+                        type="submit"
+                    />
+                    {/*</div>*/}
                 </form>
             </div>
         </div>
