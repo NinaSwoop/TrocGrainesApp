@@ -38,7 +38,12 @@ class AdController extends AbstractController
         $context = [
             AbstractNormalizer::CALLBACKS => [
                 'owner' => function ($user) {
-                    return $user->getId();
+                    return [
+                        $user->getId(),
+                        $user->getUsername(),
+                        $user->getCreatedAt()->format('Y-m-d H:i:s'),
+                        $user->getPicture()
+                    ];
                 },
                 'category' => function ($category) {
                     return $category->getCategory();

@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar.tsx";
 import Footer from "./components/Footer.tsx";
 import {AuthProvider} from "./context/AuthContext.tsx";
 import NavbarMobile from "./components/NavbarMobile.tsx";
+import AdDetails from "./pages/AdDetails.tsx";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
+                        <Route path="/ad/:id" element={<AdDetails />} />
                     </Routes>
                 </main>
                 <Footer />

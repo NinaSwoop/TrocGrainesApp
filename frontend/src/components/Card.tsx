@@ -14,7 +14,7 @@ export default function Card({ adCard }: AdCardProps) {
     });
 
     const handleCardClick = () => {
-        navigate(`/ad/${adCard.id}`);
+        navigate(`/ad/${adCard.id}`, { state: { ad: adCard } });
     };
 
 

@@ -1,6 +1,9 @@
 export interface Ad {
     id: number;
-    owner: number;
+    owner: array;
+    ownerUsername: string;
+    ownerPicture: string | null;
+    ownerCreatedAt: string | null;
     title: string;
     category: string;
     description: string | null;
