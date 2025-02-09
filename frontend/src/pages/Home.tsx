@@ -127,6 +127,7 @@ const Home = () => {
                         </svg>
                     </div>
                     </div>
+                    <div className="lg:w-[30%]">
                     <MenuSelect
                         options={[
                             { value: "", label: "Toutes les catégories" },
@@ -138,6 +139,7 @@ const Home = () => {
                         onChange={(value: string) => setSelectedCategory(value)}
                         name="menuSelect"
                     />
+                    </div>
                     <div className="flex flex-row justify-between lg:flex-row lg:justify-between">
                         <Button
                             type="button"

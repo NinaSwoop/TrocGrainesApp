@@ -3,6 +3,7 @@ interface MenuSelectProps {
     onChange: (value: string) => void;
     required?: boolean;
     name: string;
+    className?: string;
 }
 
 export default function MenuSelect({
@@ -10,11 +11,12 @@ export default function MenuSelect({
                                        onChange,
                                        required,
                                        name,
+    className,
                                    }: MenuSelectProps) {
     return (
-        <div className="inline-block relative w-full lg:w-[30%]">
+        <div className="inline-block relative w-full">
             <select
-                className="block appearance-none w-full bg-beige border border-green-light-transparent hover:border-green-dark px-4 py-2 pr-8 rounded leading-tight shadow focus:ring-green-light focus:ring-1 focus:shadow-lg focus:outline-none text-sm lg:text-base"
+                className={`block appearance-none w-full bg-beige border border-green-light-transparent hover:border-green-dark px-4 py-2 pr-8 rounded leading-tight shadow focus:ring-green-light focus:ring-1 focus:shadow-lg focus:outline-none text-sm lg:text-base ${className || ''}`}
                 onChange={(e) => onChange(e.target.value)}
                 name={name}
                 required={required}
