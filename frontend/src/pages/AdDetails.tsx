@@ -4,13 +4,16 @@ import {formatDistanceToNow, parseISO} from "date-fns";
 import {fr} from "date-fns/locale";
 import placeholder from '../assets/placeholder-ad.webp';
 import Button from "../components/Button.tsx";
-import React, {useContext} from "react";
+import {useContext} from "react";
 import {AuthContext} from "../context/AuthContext.tsx";
 
 export default function AdDetails() {
     const { user } = useContext(AuthContext);
     const location = useLocation();
     const ad: Ad = location.state?.ad;
+    const imageFileName = ad.picture;
+    const baseUrl = 'http://localhost/uploads';
+    const imageUrl = imageFileName ? `${baseUrl}/${imageFileName}` : placeholder;
     const createdAt = ad.createdAt ? parseISO(ad.createdAt) : new Date();
     const timeAgo = formatDistanceToNow(createdAt, {
         addSuffix: false,
@@ -33,7 +36,7 @@ export default function AdDetails() {
         <div className="container mx-auto px-4 py-10 pt-[7rem]">
             <h1 className="text-3xl font-bold text-green-dark text-center">{ad.title}</h1>
             <div className="flex flex-col items-center mt-6">
-                <img src={ad.picture || placeholder} alt={ad.title} className="w-60 h-60 object-cover rounded-lg shadow-md" />
+                <img src={imageUrl || placeholder} alt={ad.title} className="w-80 h-80 object-cover rounded-lg shadow-md" />
                 <p className="mt-4 text-sm lg:text-xl text-green-dark">{ad.description}</p>
                 <p className="mt-2 text-sm lg:text-base text-green-dark">Publié par {ownerUsername} il y'a {timeAgo}</p>
                 <p className="mt-2 text-sm lg:text-base text-green-dark">Membre depuis {ownerCreatedAtTimeAgo}</p>

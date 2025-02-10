@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace App\Domain\Model;
 
+use App\Domain\ValueObject\UserId;
+
 class Ad
 {
     private int $id;
     private string $title;
     private string $description;
-    private string $picture;
+    private ?string $picture;
     private string $location;
     private AdCategory $category;
     private AdStatus $status;
-    private User $owner;
+    private UserId $ownerId;
     private bool $isActivated;
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
@@ -22,14 +24,14 @@ class Ad
         int $id,
         string $title,
         string $description,
-        string $picture,
         string $location,
         AdCategory $category,
         AdStatus $status,
-        User $owner,
+        UserId $ownerId,
         bool $isActivated,
         \DateTimeImmutable $createdAt,
-        \DateTimeImmutable $updatedAt
+        \DateTimeImmutable $updatedAt,
+        ?string $picture
     ) {
         $this->id = $id;
         $this->title = $title;
@@ -38,7 +40,7 @@ class Ad
         $this->location = $location;
         $this->category = $category;
         $this->status = $status;
-        $this->owner = $owner;
+        $this->ownerId = $ownerId;
         $this->isActivated = $isActivated;
         $this->createdAt = $createdAt;
         $this->updatedAt = $updatedAt;
@@ -59,7 +61,7 @@ class Ad
         return $this->description;
     }
 
-    public function picture(): string
+    public function picture(): string | null
     {
         return $this->picture;
     }
@@ -79,9 +81,9 @@ class Ad
         return $this->status;
     }
 
-    public function owner(): User
+    public function owner(): UserId
     {
-        return $this->owner;
+        return $this->ownerId;
     }
 
     public function isActivated(): bool

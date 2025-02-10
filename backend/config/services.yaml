@@ -44,6 +44,10 @@ services:
         public: true
         tags: [ 'controller.service_arguments' ]
 
+    App\Controller\CreateAdController:
+        public: true
+        tags: [ 'controller.service_arguments' ]
+
     App\Domain\Security\PasswordHasherInterface:
         alias: App\Security\SymfonyPasswordHasher
 

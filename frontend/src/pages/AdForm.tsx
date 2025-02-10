@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import Error from '../components/Error.tsx';
 import Button from "../components/Button.tsx";
@@ -6,6 +6,7 @@ import Input from "../components/Input.tsx";
 import UploadImageZone from '../components/UploadImageZone.tsx';
 import MenuSelect from "../components/MenuSelect.tsx";
 import TextArea from "../components/TextArea.tsx";
+import { AuthContext } from "../context/AuthContext";
 
 export default function AdForm() {
     const [category, setCategory] = useState<string>('');
@@ -18,12 +19,13 @@ export default function AdForm() {
     const [error, setError] = useState<string | null>(null);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const navigate = useNavigate();
+    const { user } = useContext(AuthContext);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
     const handleCancel = () => {
         closeModal();
-        navigate("/"); // Redirection vers la page d'accueil
+        navigate("/");
     };
 
     const validateForm = () => {
@@ -70,6 +72,22 @@ export default function AdForm() {
         return valid;
     };
 
+    const createAd = async (title: string, description: string, pictureUrl: string | null, location: string, owner: number | undefined, category: string) => {
+        const response = await fetch('http://localhost/ads', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ title, description, pictureUrl, location, owner, category }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Erreur lors de la création de l'annonce");
+        }
+
+        return await response.json();
+    }
+
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
@@ -77,10 +95,15 @@ export default function AdForm() {
             return;
         }
 
+        if (!user) {
+            setError("Vous devez être connecté pour publier une annonce.");
+            return;
+        }
+
         try {
-            await addAd(title, category, description, picture, location);
+            await createAd(title, description, pictureUrl, location, user.id, category);
             console.log("Annonce publiée !");
-            window.location.href = "/home";
+            window.location.href = "/";
         } catch (error) {
             console.error("Erreur lors de l'ajout de l'annonce:", error);
             setError("Erreur lors de l'ajout de l'annonce. Réponse inattendue du serveur.");
@@ -112,8 +135,9 @@ export default function AdForm() {
                 setError("Erreur lors du téléchargement du fichier");
             }
 
-            const data = await response.text();
+            const data = await response.json();
             if (data) {
+                console.log(data);
                 setPictureUrl(data);
             } else {
                 setError('Erreur fichier');
@@ -146,6 +170,7 @@ export default function AdForm() {
                             {/*{errors.usernameLength && <Error title="Erreur" text={errors.usernameLength}/>}*/}
                             <MenuSelect
                                 options={[
+                                    { value: "", label: "Choisir une catégorie" },
                                     { value: "plantes", label: "Plantes" },
                                     { value: "graines", label: "Graines" },
                                     { value: "boutures", label: "Boutures" },
@@ -196,14 +221,14 @@ export default function AdForm() {
                             {errors.location && <Error title="Erreur" text={errors.location}/>}
                         </div>
                         <div className="flex flex-col md:flex-row justify-around">
-                            <div className="flex items-center justify-center">
+                            <div className="flex items-center justify-center md:mt-2">
                                 <Button
                                     text="Publier"
                                     type="submit"
                                     className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold text-sm lg:text-base"
                                 />
                             </div>
-                            <div className="flex items-center justify-center mt-4 lg:mt-0">
+                            <div className="flex items-center justify-center mt-4 md:mt-2">
                                 <Button
                                     text="Annuler"
                                     type="button"

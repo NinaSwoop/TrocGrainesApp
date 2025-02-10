@@ -31,10 +31,6 @@ class AdController extends AbstractController
     {
         $ads = $this->adService->allAds();
 
-//        foreach ($ads as $ad => $value) {
-//
-//        }
-
         $context = [
             AbstractNormalizer::CALLBACKS => [
                 'owner' => function ($user) {

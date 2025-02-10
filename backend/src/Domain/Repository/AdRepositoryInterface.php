@@ -8,8 +8,8 @@ use App\Domain\Model\Ad;
 
 interface AdRepositoryInterface
 {
-//    public function add(Ad $ad): void;
-//
+    public function add(Ad $ad): void;
+
 //    public function update(Ad $ad): void;
 //
 //    public function delete(Ad $ad): void;

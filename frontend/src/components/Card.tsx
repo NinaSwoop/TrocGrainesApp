@@ -5,8 +5,10 @@ import { fr } from 'date-fns/locale';
 import placeholder from '../assets/placeholder-ad.webp';
 
 export default function Card({ adCard }: AdCardProps) {
+    const baseUrl = 'http://localhost/uploads';
+    const imageFileName = adCard.picture;
     const navigate = useNavigate();
-    const imageUrl = adCard.picture ? adCard.picture : placeholder;
+    const imageUrl = imageFileName ? `${baseUrl}/${imageFileName}` : placeholder;
     const createdAt = adCard.createdAt ? parseISO(adCard.createdAt) : new Date();
     const timeAgo = formatDistanceToNow(createdAt, {
         addSuffix: false,
@@ -26,7 +28,7 @@ export default function Card({ adCard }: AdCardProps) {
                         <img
                             src={imageUrl}
                             alt={adCard.title}
-                            className="size-32 rounded-t-lg"
+                            className="size-32 rounded-t-lg object-cover"
                         />
                     </div>
                     <h3 className="text-green-dark font-bold mt-2 lg:mt-0">

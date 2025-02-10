@@ -162,7 +162,7 @@ export default function RegistrationPage() {
                 setError("Erreur lors du téléchargement du fichier");
             }
 
-            const data = await response.text();
+            const data = await response.json();
             if (data) {
                 setPictureUrl(data);
             } else {
