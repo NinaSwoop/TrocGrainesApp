@@ -49,6 +49,8 @@ class AuthenticatedController
             'id' => $authenticatedUserDto->id,
             'point_balance'=> $authenticatedUserDto->point_balance,
             'username'=> $authenticatedUserDto->username,
+            'picture'=> $authenticatedUserDto->picture,
+            'createdAt'=> $authenticatedUserDto->createdAt
         ]);
 
         return new Response($content, Response::HTTP_OK);

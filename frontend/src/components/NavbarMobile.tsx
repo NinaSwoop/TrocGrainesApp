@@ -31,7 +31,7 @@ export default function NavbarMobile() {
                 </a>
 
                 {user ? (
-                    <button onClick={() => window.location.href = "/profile"} className="flex items-center green-darker">
+                    <button onClick={() => window.location.href = `/profile/${user.id}`} className="flex items-center green-darker">
                         <p className="text-l mr-2">{user.username}</p>
                         <img src={placeholder} alt="avatar of plant" className="h-10 w-10 cursor-pointer rounded-full"/>
                     </button>

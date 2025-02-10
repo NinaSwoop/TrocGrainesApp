@@ -9,6 +9,7 @@ import {AuthProvider} from "./context/AuthContext.tsx";
 import NavbarMobile from "./components/NavbarMobile.tsx";
 import AdDetails from "./pages/AdDetails.tsx";
 import AdForm from "./pages/AdForm.tsx";
+import Profile from "./pages/Profile.tsx";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
                         <Route path="/register" element={<Register />} />
                         <Route path="/ad/:id" element={<AdDetails />} />
                         <Route path="/create-ad" element={<AdForm />} />
+                        <Route path="/profile/:id" element={<Profile />} />
                     </Routes>
                 </main>
                 <Footer />

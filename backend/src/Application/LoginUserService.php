@@ -55,7 +55,9 @@ class LoginUserService
             roles: $user->roles(),
             id: $user->id(),
             point_balance: $user->pointBalance()->getValue(),
-            username: $user->username()
+            username: $user->username(),
+            picture: $user->picture(),
+            createdAt: $user->createdAt()->format('Y-m-d H:i:s')
         );
     }
 }
