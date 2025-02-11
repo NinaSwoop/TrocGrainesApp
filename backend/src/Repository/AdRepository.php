@@ -36,31 +36,6 @@ class AdRepository extends ServiceEntityRepository implements AdRepositoryInterf
             ->getQuery()
             ->getResult();
     }
-
-//    /**
-//     * @return Ad[] Returns an array of Ad objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Ad
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
     /**
      * @throws ORMException
      */
@@ -91,5 +66,25 @@ class AdRepository extends ServiceEntityRepository implements AdRepositoryInterf
 
         $this->getEntityManager()->persist($adEntity);
         $this->getEntityManager()->flush();
+    }
+
+    public function findByOwner(int $id): array
+    {
+        return $this->createQueryBuilder('ad')
+            ->where('ad.owner = :id')
+            ->setParameter('id', $id)
+            ->orderBy('ad.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function delete(int $id)
+    {
+       return $this->createQueryBuilder('ad')
+            ->delete()
+            ->where('ad.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
     }
 }

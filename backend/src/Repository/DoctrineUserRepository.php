@@ -56,7 +56,7 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
         $symfonyUser->setPicture($user->picture());
         $symfonyUser->setPassword($user->password());
         $symfonyUser->setPointBalance($user->pointBalance()->getValue());
-        $symfonyUser->setRole($user->roles());
+        $symfonyUser->setRoles($user->roles());
         $symfonyUser->setCreatedAt(new \DateTimeImmutable());
 
         $this->getEntityManager()->persist($symfonyUser);
@@ -81,7 +81,7 @@ class DoctrineUserRepository extends ServiceEntityRepository implements UserRepo
         $symfonyUser->setPicture($user->picture());
         $symfonyUser->setPassword($user->password());
         $symfonyUser->setPointBalance($user->pointBalance()->getValue());
-        $symfonyUser->setRole($user->roles());
+        $symfonyUser->setRoles($user->roles());
         $symfonyUser->setUpdatedAt(new \DateTimeImmutable());
 
         $this->getEntityManager()->flush();

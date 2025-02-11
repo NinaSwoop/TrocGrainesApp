@@ -185,7 +185,7 @@ class SymfonyUser
         return array_unique($roles);
     }
 
-    public function setRole(array $roles): self
+    public function setRoles(array $roles): self
     {
         $this->roles = $roles;
 

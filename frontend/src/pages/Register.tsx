@@ -183,53 +183,61 @@ export default function RegistrationPage() {
                     </h2>
                     <form encType="multipart/form-data" onSubmit={handleSubmit} noValidate>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm lg:text-base">
-                            <Input
-                                label="Nom d'utilisateur"
-                                type="text"
-                                placeholder="Votre nom d'utilisateur"
-                                value={username}
-                                onChange={setUsername}
-                                required={true}
-                                aria-describedby="username"
-                            />
-                            {errors.username && <Error title="Erreur" text={errors.username}/>}
-                            {errors.usernameRegex && <Error title="Erreur" text={errors.usernameRegex}/>}
-                            {errors.usernameLength && <Error title="Erreur" text={errors.usernameLength}/>}
-                            <Input
-                                label="Nom"
-                                type="text"
-                                placeholder="Votre nom"
-                                value={lastname}
-                                onChange={setLastname}
-                                required={true}
-                                aria-describedby="lastname"
-                            />
-                            {errors.lastname && <Error title="Erreur" text={errors.lastname}/>}
-                            {errors.lastnameRegex && <Error title="Erreur" text={errors.lastnameRegex}/>}
-                            {errors.lastnameLength && <Error title="Erreur" text={errors.lastnameLength}/>}
-                            <Input
-                                label="Prénom"
-                                type="text"
-                                placeholder="Votre prénom"
-                                value={firstname}
-                                onChange={setFirstname}
-                                required={true}
-                                aria-describedby="firstname"
-                            />
-                            {errors.firstname && <Error title="Erreur" text={errors.firstname}/>}
-                            {errors.firstnameRegex && <Error title="Erreur" text={errors.firstnameRegex}/>}
-                            {errors.firstnameLength && <Error title="Erreur" text={errors.firstnameLength}/>}
-                            <Input
-                                label="Email"
-                                type="email"
-                                placeholder="Votre email"
-                                value={email}
-                                onChange={setEmail}
-                                required={true}
-                                aria-describedby="email"
-                            />
-                            {errors.email && <Error title="Erreur" text={errors.email}/>}
-                            {errors.emailNotComplete && <Error title="Erreur" text={errors.emailNotComplete}/>}
+                            <div>
+                                <Input
+                                    label="Nom d'utilisateur"
+                                    type="text"
+                                    placeholder="Votre nom d'utilisateur"
+                                    value={username}
+                                    onChange={setUsername}
+                                    required={true}
+                                    aria-describedby="username"
+                                />
+                                {errors.username && <Error title="Erreur" text={errors.username}/>}
+                                {errors.usernameRegex && <Error title="Erreur" text={errors.usernameRegex}/>}
+                                {errors.usernameLength && <Error title="Erreur" text={errors.usernameLength}/>}
+                            </div>
+                            <div>
+                                <Input
+                                    label="Nom"
+                                    type="text"
+                                    placeholder="Votre nom"
+                                    value={lastname}
+                                    onChange={setLastname}
+                                    required={true}
+                                    aria-describedby="lastname"
+                                />
+                                {errors.lastname && <Error title="Erreur" text={errors.lastname}/>}
+                                {errors.lastnameRegex && <Error title="Erreur" text={errors.lastnameRegex}/>}
+                                {errors.lastnameLength && <Error title="Erreur" text={errors.lastnameLength}/>}
+                            </div>
+                            <div>
+                                <Input
+                                    label="Prénom"
+                                    type="text"
+                                    placeholder="Votre prénom"
+                                    value={firstname}
+                                    onChange={setFirstname}
+                                    required={true}
+                                    aria-describedby="firstname"
+                                />
+                                {errors.firstname && <Error title="Erreur" text={errors.firstname}/>}
+                                {errors.firstnameRegex && <Error title="Erreur" text={errors.firstnameRegex}/>}
+                                {errors.firstnameLength && <Error title="Erreur" text={errors.firstnameLength}/>}
+                            </div>
+                            <div>
+                                <Input
+                                    label="Email"
+                                    type="email"
+                                    placeholder="Votre email"
+                                    value={email}
+                                    onChange={setEmail}
+                                    required={true}
+                                    aria-describedby="email"
+                                />
+                                {errors.email && <Error title="Erreur" text={errors.email}/>}
+                                {errors.emailNotComplete && <Error title="Erreur" text={errors.emailNotComplete}/>}
+                            </div>
                         </div>
                         <Input
                             label="Mot de passe"

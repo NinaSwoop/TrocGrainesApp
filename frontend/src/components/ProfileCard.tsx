@@ -31,7 +31,7 @@ export default function ProfileCard() {
                          </div>
 
                          <div className="flex items-center justify-center text-green-dark mt-3">
-                             <span className="text-green-dark text-center">Je suis membre depuis : {timeAgo}</span>
+                             <span className="text-green-dark text-center lg:text-xl">Je suis membre depuis : {timeAgo}</span>
                          </div>
                      </div>
                     </div>

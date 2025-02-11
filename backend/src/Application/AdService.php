@@ -32,4 +32,15 @@ class AdService
 
         return $ads;
     }
+
+    public function AdsByOwner(int $id): array
+    {
+        $adsByOwner = $this->adRepository->findByOwner($id);
+
+        if (empty($adsByOwner)) {
+            $this->logger->warning('Aucune annonce trouvée');
+        }
+
+        return $adsByOwner;
+    }
 }

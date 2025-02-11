@@ -35,7 +35,7 @@ class UserFixtures extends Fixture
             $user->setBirthdate($faker->dateTimeThisCentury());
             $user->setPicture('');
             $user->setPointBalance(3);
-            $user->setRole(['ROLE_USER']);
+            $user->setRoles(['ROLE_USER']);
             $user->setCreatedAt(new \DateTimeImmutable());
             $user->setUpdatedAt(new \DateTimeImmutable());
 

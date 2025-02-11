@@ -11,7 +11,7 @@ use App\Application\AdService;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class AdController extends AbstractController
+class AdsByOwnerController extends AbstractController
 {
     private AdService $adService;
 
@@ -20,20 +20,15 @@ class AdController extends AbstractController
         $this->adService = $adService;
     }
 
-    #[Route('/ads', name: 'ads', methods: ['GET'])]
-    public function getAllAds(SerializerInterface $serializer): Response
+    #[Route('/users/{id}/ads', name: 'ads_by_owner', methods: ['GET'])]
+    public function getAdsByOwner(int $id, SerializerInterface $serializer): Response
     {
-        $ads = $this->adService->allAds();
+        $ads = $this->adService->adsByOwner($id);
 
         $context = [
             AbstractNormalizer::CALLBACKS => [
                 'owner' => function ($user) {
-                    return [
-                        $user->getId(),
-                        $user->getUsername(),
-                        $user->getCreatedAt()->format('Y-m-d H:i:s'),
-                        $user->getPicture()
-                    ];
+                    return $user->getId();
                 },
                 'category' => function ($category) {
                     return $category->getCategory();
@@ -41,12 +36,6 @@ class AdController extends AbstractController
                 'adStatus' => function ($status) {
                     return $status->getStatus();
                 },
-                'createdAt' => function ($createdAt) {
-                    return $createdAt->format('Y-m-d H:i:s');
-                },
-                'updatedAt' => function ($updatedAt) {
-                    return $updatedAt->format('Y-m-d H:i:s');
-                }
             ],
         ];
 
