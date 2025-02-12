@@ -6,9 +6,7 @@ namespace App\Controller;
 
 use App\Application\CreateAdService;
 use App\Application\InputAdDto;
-use App\Domain\ValueObject\UserId;
-use App\Entity\Ad;
-use App\Entity\SymfonyUser;
+use OpenApi\Annotations as OA;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -16,7 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
 class CreateAdController
 {
@@ -29,7 +26,21 @@ class CreateAdController
         $this->logger = $logger;
         $this->createAdService = $createAdService;
     }
-    #[Route('api/ads', name: 'ad_create', methods: ['POST'])]
+
+
+    #[Route('/api/ads', name: 'ad_create', methods: ['POST'])]
+    /**
+     * @OA\Post(
+     *     path="/api/ads",
+     *     summary="Endpoint de test",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Réponse de test"
+     *     )
+     * )
+     *
+     * @OA\Tag(name="Test")
+     */
     public function createAd(Request $request, SerializerInterface $serializer, LoggerInterface $logger) : jsonresponse
     {
         if ('json' !== $request->getContentTypeFormat()) {
@@ -40,7 +51,7 @@ class CreateAdController
 
         $ad = $serializer->deserialize($jsonData, InputAdDto::class, 'json');
 
-       $this->createAdService->create($ad);
+        $this->createAdService->create($ad);
 
         return new jsonresponse('Ad created', Response::HTTP_CREATED);
     }

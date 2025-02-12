@@ -19,7 +19,7 @@ class RegisterUserDto
     public \DateTime $createdAt;
     public \DateTime $updatedAt;
 
-    public function __construct(string $username, string $firstname, string $lastname, string $email, string $birthdate, string $password, ?string $picture = null, int $pointBalance, \DateTime $createdAt, \DateTime $updatedAt)
+    public function __construct(string $username, string $firstname, string $lastname, string $email, string $birthdate, string $password, int $pointBalance, \DateTime $createdAt, \DateTime $updatedAt, ?string $picture = null)
     {
         $this->username = $username;
         $this->firstname = $firstname;
