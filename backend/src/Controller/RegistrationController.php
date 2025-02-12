@@ -22,7 +22,7 @@ class RegistrationController
         $this->logger = $logger;
     }
 
-    #[Route('/auth/register', name: 'auth_register', methods: ['POST', 'GET'])]
+    #[Route('api/auth/register', name: 'auth_register', methods: ['POST', 'GET'])]
     public function register(Request $request): Response
     {
         $data = json_decode($request->getContent(), true);

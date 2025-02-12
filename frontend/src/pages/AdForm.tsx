@@ -79,7 +79,7 @@ export default function AdForm() {
         location: string,
         owner: number | undefined,
         category: string) => {
-        const response = await fetch('http://localhost/ads', {
+        const response = await fetch('http://localhost/api/ads', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ export default function AdForm() {
         formData.append('file', file);
 
         try {
-            const response = await fetch('http://localhost/upload_file', {
+            const response = await fetch('http://localhost/api/upload_file', {
                 method: 'POST',
                 body: formData,
             });

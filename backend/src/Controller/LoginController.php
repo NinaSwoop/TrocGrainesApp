@@ -26,7 +26,7 @@ class LoginController
         $this->logger = $logger;
     }
 
-    #[Route('/auth/login', name: 'auth_login', methods: ['POST'])]
+    #[Route('api/auth/login', name: 'auth_login', methods: ['POST'])]
     public function login(Request $request): JsonResponse
     {
         $this->logger->info('Raw request content:', [$request->getContent()]);

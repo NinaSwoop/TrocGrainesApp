@@ -15,14 +15,13 @@ export default function Profile() {
     useEffect(() => {
 
         if (!user || !user.id) {
-            console.log("Utilisateur non authentifié.");
             setError("Utilisateur non authentifié.");
             setLoading(false);
             return;
         }
         const fetchAdsByOwner = async () => {
             try {
-                const response = await fetch(`http://localhost/users/${user?.id}/ads`);
+                const response = await fetch(`http://localhost/api/users/${user?.id}/ads`);
                 if (!response.ok) {
                     throw new Error("Erreur de chargement des annonces.");
                 }
@@ -57,7 +56,7 @@ export default function Profile() {
                 ) : ads.length > 0 ? (
                     ads.map((ad) => <SenderAdProfile key={ad.id} adCard={ad} />)
                 ) :  (
-                    <p>Aucune annonce trouvée.</p>
+                    <p>Aucune annonce publiée</p>
                 )}
             </div>
         </div>

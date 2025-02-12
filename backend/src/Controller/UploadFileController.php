@@ -14,7 +14,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class UploadFileController
 {
-    #[Route('/upload_file', name: 'upload_file', methods: ['POST'])]
+    #[Route('api/upload_file', name: 'upload_file', methods: ['POST'])]
     public function uploadFile(Request $request,
         SluggerInterface $slugger,
         #[Autowire('%kernel.project_dir%/public/uploads')] string $filesDirectory): JsonResponse

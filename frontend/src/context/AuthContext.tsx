@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const [user, setUser] = useState<{ email: string; roles: string[], id: number; point_balance: number; username: string; picture: string; createdAt: string } | null>(null);
 
     useEffect(() => {
-        fetch("http://localhost/auth/auth_user", {
+        fetch("http://localhost/api/auth/auth_user", {
             method: "GET",
             credentials: "include",
         })
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }, []);
 
     const login = async (email: string, password: string) => {
-        const res = await fetch("http://localhost/auth/login", {
+        const res = await fetch("http://localhost/api/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     const logout = async () => {
-        await fetch("http://localhost/auth/logout", {
+        await fetch("http://localhost/api/auth/logout", {
             method: "POST",
             credentials: "include"
         });
@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     };
 
     const register = async (username: string, firstname: string, lastname: string, email: string, birthdate: string, pictureUrl: string | null, password: string) => {
-        const res = await fetch("http://localhost/auth/register", {
+        const res = await fetch("http://localhost/api/auth/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, firstname, lastname, email, birthdate, pictureUrl, password })

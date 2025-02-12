@@ -20,7 +20,7 @@ class AuthenticatedController
         $this->logger = $logger;
     }
 
-    #[Route('/auth/auth_user', name: 'auth_user', methods: ['GET'])]
+    #[Route('api/auth/auth_user', name: 'auth_user', methods: ['GET'])]
     public function authenticatedUser(): Response
     {
         $this->logger->info('Session avant récupération: ', [

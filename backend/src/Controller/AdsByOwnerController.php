@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Application\AdService;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -20,7 +21,7 @@ class AdsByOwnerController extends AbstractController
         $this->adService = $adService;
     }
 
-    #[Route('/users/{id}/ads', name: 'ads_by_owner', methods: ['GET'])]
+    #[Route('api/users/{id}/ads', name: 'ads_by_owner', methods: ['GET'])]
     public function getAdsByOwner(int $id, SerializerInterface $serializer): Response
     {
         $ads = $this->adService->adsByOwner($id);

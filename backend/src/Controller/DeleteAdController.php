@@ -22,7 +22,7 @@ class DeleteAdController
         $this->deleteAdService = $deleteAdService;
     }
 
-    #[Route('/ads/{id}', name: 'ad_delete', methods: ['DELETE'])]
+    #[Route('api/ads/{id}', name: 'ad_delete', methods: ['DELETE'])]
     public function deletedAd(LoggerInterface $logger, int $id): jsonresponse
     {
         $this->deleteAdService->delete($id);

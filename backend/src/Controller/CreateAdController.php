@@ -29,7 +29,7 @@ class CreateAdController
         $this->logger = $logger;
         $this->createAdService = $createAdService;
     }
-    #[Route('/ads', name: 'ad_create', methods: ['POST'])]
+    #[Route('api/ads', name: 'ad_create', methods: ['POST'])]
     public function createAd(Request $request, SerializerInterface $serializer, LoggerInterface $logger) : jsonresponse
     {
         if ('json' !== $request->getContentTypeFormat()) {

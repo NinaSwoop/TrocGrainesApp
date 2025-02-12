@@ -16,7 +16,7 @@ class LogoutController
     {
         $this->logoutUserService = $logoutUserService;
     }
-    #[Route('/auth/logout', name: 'auth_logout', methods: ['POST'])]
+    #[Route('api/auth/logout', name: 'auth_logout', methods: ['POST'])]
     public function logout(): JsonResponse
     {
         $this->logoutUserService->logout();

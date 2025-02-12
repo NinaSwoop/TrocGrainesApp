@@ -49,7 +49,7 @@ const Home = () => {
     useEffect(() => {
         const fetchAds = async () => {
             try {
-                const response = await fetch("http://localhost/ads");
+                const response = await fetch("http://localhost/api/ads");
                 if (!response.ok) {
                     throw new Error("Erreur de chargement des annonces.");
                 }

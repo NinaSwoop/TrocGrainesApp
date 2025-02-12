@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Application\AdService;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 
@@ -20,7 +21,7 @@ class AdController extends AbstractController
         $this->adService = $adService;
     }
 
-    #[Route('/ads', name: 'ads', methods: ['GET'])]
+    #[Route('api/ads', name: 'ads', methods: ['GET'])]
     public function getAllAds(SerializerInterface $serializer): Response
     {
         $ads = $this->adService->allAds();

@@ -153,7 +153,7 @@ export default function RegistrationPage() {
         formData.append('file', file);
 
         try {
-            const response = await fetch('http://localhost/upload_file', {
+            const response = await fetch('http://localhost/api/upload_file', {
                 method: 'POST',
                 body: formData,
             });
