@@ -114,7 +114,4 @@ class User
         return $this->updatedAt;
     }
 
-    //    public function earnPoints() : void {
-    //
-    //    }
 }

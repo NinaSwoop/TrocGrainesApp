@@ -15,3 +15,5 @@ interface AdRepositoryInterface
     public function findByOwner(int $id): array;
     public function delete(int $id);
 }
+
+

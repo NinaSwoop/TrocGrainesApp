@@ -11,7 +11,6 @@ use App\Entity\SymfonyUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
-use App\Repository\AdStatusRepository;
 
 /**
  * @extends ServiceEntityRepository<Ad>
@@ -41,7 +40,6 @@ class AdRepository extends ServiceEntityRepository implements AdRepositoryInterf
      */
     public function add(AdModel $ad): void
     {
-        // On convertit l'objet Domain en entité
         $adEntity = new Ad();
         $adEntity->setTitle($ad->title());
         $adEntity->setDescription($ad->description());

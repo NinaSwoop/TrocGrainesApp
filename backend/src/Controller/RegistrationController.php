@@ -42,10 +42,10 @@ class RegistrationController
             email: $data['email'],
             birthdate: $data['birthdate'],
             password: $data['password'],
-            picture: $data['pictureUrl'],
             pointBalance: 3,
             createdAt: new \DateTime(),
             updatedAt: new \DateTime(),
+            picture: $data['pictureUrl'],
         );
 
         $this->registerUserService->register($registerUserDTO);

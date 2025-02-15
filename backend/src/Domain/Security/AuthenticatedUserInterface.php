@@ -12,5 +12,8 @@ interface AuthenticatedUserInterface
     public function setAuthenticatedUserRole(array $role): void;
     public function isAuthenticated(): bool;
     public function clearAuthenticatedUser(): void;
-
 }
+
+
+
+

@@ -30,3 +30,5 @@ EXPOSE 9000
 
 WORKDIR /app/backend
 CMD ["php-fpm"]
+
+
