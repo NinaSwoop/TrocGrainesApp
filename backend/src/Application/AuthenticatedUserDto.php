@@ -14,8 +14,15 @@ class AuthenticatedUserDto
     public ?string $picture;
     public string $createdAt;
 
-    public function __construct(string $email, array $roles, int $id, int $point_balance, string $username, string | null $picture, string $createdAt)
-    {
+    public function __construct(
+        string $email,
+        array $roles,
+        int $id,
+        int $point_balance,
+        string $username,
+        string | null $picture,
+        string $createdAt
+    ) {
         $this->email = $email;
         $this->roles = $roles;
         $this->id = $id;
