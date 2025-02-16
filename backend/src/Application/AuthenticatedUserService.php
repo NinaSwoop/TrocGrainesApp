@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Application;
 
-use App\Application\AuthenticatedUserDto;
 use App\Domain\Security\AuthenticatedUserInterface;
 use App\Domain\Repository\UserRepositoryInterface;
 use Psr\Log\LoggerInterface;
@@ -14,7 +13,10 @@ class AuthenticatedUserService
     private UserRepositoryInterface $userRepository;
     private LoggerInterface $logger;
 
-    public function __construct(AuthenticatedUserInterface $authenticatedUser, UserRepositoryInterface $userRepository, LoggerInterface $logger)
+    public function __construct(
+        AuthenticatedUserInterface $authenticatedUser,
+        UserRepositoryInterface $userRepository,
+        LoggerInterface $logger)
     {
         $this->authenticatedUser = $authenticatedUser;
         $this->userRepository = $userRepository;
@@ -40,6 +42,19 @@ class AuthenticatedUserService
 
         $this->logger->info('User : '.$user->email());
 
-        return new AuthenticatedUserDto($user->email(), $user->roles(), $user->id(), $user->pointBalance()->getValue(), $user->username(), $user->picture(), $user->createdAt()->format('Y-m-d H:i:s'));
+        return new AuthenticatedUserDto(
+            $user->email(),
+            $user->roles(),
+            $user->id(),
+            $user->pointBalance()->getValue(),
+            $user->username(),
+            $user->picture(),
+            $user->createdAt()->format('Y-m-d H:i:s')
+        );
     }
 }
+
+
+
+
+

@@ -23,7 +23,6 @@ services:
     working_dir: /app/backend
     ports:
       - "8000:8000"
-    # command: symfony server:start --no-tls --port=8000 --listen-ip=0.0.0.0
     secrets:
       - db_url
     environment:
@@ -51,14 +50,6 @@ services:
     restart: always
     ports:
       - "5432:5432"
-    #secrets:
-    #  - db_password
-    #  - db_user
-    #  - db_name
-    #environment:
-    #  POSTGRES_USER_FILE: /run/secrets/db_user
-    #  POSTGRES_PASSWORD_FILE: /run/secrets/db_password
-    #  POSTGRES_DB_FILE: /run/secrets/db_name
     volumes:
       - ./postgresql/data:/var/lib/postgresql/data
 
@@ -72,14 +63,12 @@ services:
       - db
 
 secrets:
-  db_password:
-    file: ./secrets/db_password.secret
-  db_name:
-    file: ./secrets/db_name.secret
-  db_user:
-    file: ./secrets/db_user.secret
   db_url:
     file: ./secrets/db_url.secret
+
+
+
+
 
 
 

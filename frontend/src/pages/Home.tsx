@@ -138,6 +138,7 @@ const Home = () => {
                         ]}
                         onChange={(value: string) => setSelectedCategory(value)}
                         name="menuSelect"
+                        ariaLabel="menuSelect"
                     />
                     </div>
                     <div className="flex flex-row justify-between lg:flex-row lg:justify-between">

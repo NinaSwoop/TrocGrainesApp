@@ -4,6 +4,7 @@ interface MenuSelectProps {
     required?: boolean;
     name: string;
     className?: string;
+    ariaLabel?: string;
 }
 
 export default function MenuSelect({
@@ -11,11 +12,14 @@ export default function MenuSelect({
                                        onChange,
                                        required,
                                        name,
-    className,
+                                       className,
+                                       ariaLabel
                                    }: MenuSelectProps) {
     return (
         <div className="inline-block relative w-full">
             <select
+                id="menuSelect"
+                aria-label={ariaLabel}
                 className={`block appearance-none w-full bg-beige border border-green-light-transparent hover:border-green-dark px-4 py-2 pr-8 rounded leading-tight shadow focus:ring-green-light focus:ring-1 focus:shadow-lg focus:outline-none text-sm lg:text-base ${className || ''}`}
                 onChange={(e) => onChange(e.target.value)}
                 name={name}

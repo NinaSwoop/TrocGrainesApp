@@ -19,8 +19,11 @@ class LoginController
     private AuthenticatedUserInterface $authenticatedUser;
     private LoggerInterface $logger;
 
-    public function __construct(LoginUserService $loginUserService, AuthenticatedUserInterface $authenticatedUser,LoggerInterface $logger)
-    {
+    public function __construct(
+        LoginUserService $loginUserService,
+        AuthenticatedUserInterface $authenticatedUser,
+        LoggerInterface $logger
+    ) {
         $this->loginUserService = $loginUserService;
         $this->authenticatedUser = $authenticatedUser;
         $this->logger = $logger;
@@ -43,7 +46,13 @@ class LoginController
             return new JsonResponse(['message' => 'Missing email or password'], Response::HTTP_BAD_REQUEST);
         }
 
-        $this->logger->info('Received login data: ', [$data['security']['credentials']['email'], $data['security']['credentials']['password']]);
+        $this->logger->info(
+            'Received login data: ',
+            [
+                $data['security']['credentials']['email'],
+                $data['security']['credentials']['password']
+            ]
+        );
 
         $loginUserDTO = new LoginUserDTO(
             email: $data['security']['credentials']['email'],
@@ -65,3 +74,5 @@ class LoginController
         return new JsonResponse($content, Response::HTTP_OK);
     }
 }
+
+

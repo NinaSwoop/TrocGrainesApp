@@ -43,3 +43,4 @@ class SecurityUser implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->user->email();
     }
 }
+

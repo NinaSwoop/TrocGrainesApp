@@ -186,6 +186,7 @@ export default function AdForm() {
                                 name="menuSelect"
                                 aria-describedby="categorie des annonces"
                                 className="w-full bg-beige-light"
+                                ariaLabel="menuSelect"
                             />
                             {errors.category && <Error title="Erreur" text={errors.category}/>}
                             <TextArea

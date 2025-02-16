@@ -38,8 +38,12 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         $domainUser = $this->userRepository->findByEmail($identifier);
 
         if (!$domainUser) {
-            $this->logger->error(sprintf('Utilisateur non trouvé pour identifiant : %s', $identifier));
-            throw new UserNotFoundException(sprintf('Utilisateur avec l\'identifiant "%s" non trouvé.', $identifier));
+            $this->logger->error(
+                sprintf('Utilisateur non trouvé pour identifiant : %s', $identifier)
+            );
+            throw new UserNotFoundException(
+                sprintf('Utilisateur avec l\'identifiant "%s" non trouvé.', $identifier)
+            );
         }
 
         return new SecurityUser($domainUser);
