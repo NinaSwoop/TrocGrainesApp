@@ -172,7 +172,6 @@ const Home = () => {
                             </Link> )}
                     </div>
                 </div>
-
                 <div className="flex-grow mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-5 gap-7 place-items-center pt-[11rem] md:pt-[8rem] md:mr-5 md:ml-5 lg:mr-10 lg:ml-10 lg:gap-10 lg:pt-[4rem] xl:gap-4">
                     {loading ? (
                         <p>Chargement des annonces...</p>

@@ -21,7 +21,6 @@ export default function Input({
                 htmlFor={label}
             >
                 {label}
-            </label>
             <input
                 className="block appearance-none bg-beige-light w-full border border-green-light-transparent hover:border-green-dark px-4 py-2 pr-8 rounded leading-tight shadow focus:ring focus:ring-green-light focus:shadow-lg focus:outline-none"
                 type={type}
@@ -29,6 +28,7 @@ export default function Input({
                 onChange={(e) => onChange(e.target.value)}
                 required={required}
             />
+            </label>
         </div>
     );
 }
