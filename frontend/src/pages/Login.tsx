@@ -1,99 +1,106 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from "react";
 import Button from "../components/Button.tsx";
 import Input from "../components/Input.tsx";
 import Error from "../components/Error.tsx";
-import {AuthContext} from "../context/AuthContext.tsx";
+import { AuthContext } from "../context/AuthContext.tsx";
 
 export default function LoginPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState<string | null>(null);
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
-    const { login }  = useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const { login } = useContext(AuthContext);
 
-    const validateForm = () => {
-        let valid = true;
-        const newErrors: any = {};
+  const validateForm = () => {
+    let valid = true;
+    const newErrors: any = {};
 
-        if (!email) {
-            newErrors.email = 'Veuillez indiquer votre email';
-            valid = false;
-        }
+    if (!email) {
+      newErrors.email = "Veuillez indiquer votre email";
+      valid = false;
+    }
 
-        if (!password) {
-            newErrors.password = 'Veuillez indiquer votre mot de passe';
-            valid = false;
-        }
+    if (!password) {
+      newErrors.password = "Veuillez indiquer votre mot de passe";
+      valid = false;
+    }
 
-        setErrors(newErrors);
-        return valid;
-    };
+    setErrors(newErrors);
+    return valid;
+  };
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
 
-        if (!validateForm()) {
-            return;
-        }
-        console.log(email);
-        console.log(password);
-        try {
-            await login(email, password);
-            console.log("Connexion réussie !");
-            window.location.href = "/";
-        } catch (error) {
-            console.error("Erreur lors de la connexion:", error);
-            setError("Erreur lors de la connexion. Réponse inattendue du serveur.");
-        }
-    };
+    if (!validateForm()) {
+      return;
+    }
+    console.log(email);
+    console.log(password);
+    try {
+      await login(email, password);
+      console.log("Connexion réussie !");
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Erreur lors de la connexion:", error);
+      setError("Erreur lors de la connexion. Réponse inattendue du serveur.");
+    }
+  };
 
-    return (
-        <div className="h-screen flex flex-col bg-gray-100">
-            <div className="flex-grow flex items-center justify-center">
-                <div className="max-w-xl h-auto bg-beige p-10 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-bold mb-6 text-center text-green-dark" data-cy="connexion-title">
-                        Connectez-vous
-                    </h2>
-                    <form onSubmit={handleSubmit} noValidate>
-                        <div className="mb-4 text-sm lg:text-base">
-                            <Input
-                                label="Email"
-                                type="email"
-                                placeholder="email@email.com"
-                                value={email}
-                                onChange={setEmail}
-                                required={true}
-                            />
-                            {errors.email && <Error title="Erreur" text={errors.email} />}
-                        </div>
-                        <div className="mb-6 text-sm lg:text-base">
-                            <Input
-                                label="Mot de passe"
-                                type="password"
-                                placeholder="********"
-                                value={password}
-                                onChange={setPassword}
-                                required={true}
-                            />
-                            {errors.password && <Error title="Erreur" text={errors.password} />}
-                        </div>
-                        <div className="mt-5 mb-5">
-                            <a href="/register"
-                               className="text sm text-green-dark text-decoration-line: underline text-sm lg:text-base">
-                                Pas encore inscrit ? Créer un compte
-                            </a>
-                        </div>
-                        {error && <Error title="Erreur" text={error} />}
-                        <div className="flex items-center justify-center">
-                            <Button
-                                text="Connexion"
-                                type="submit"
-                                className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold text-sm lg:text-base"
-                            />
-                        </div>
-                    </form>
-                </div>
+  return (
+    <div className="h-screen flex flex-col bg-gray-100">
+      <div className="flex-grow flex items-center justify-center">
+        <div className="max-w-xl h-auto bg-beige p-10 rounded-lg shadow-md">
+          <h2
+            className="text-2xl font-bold mb-6 text-center text-green-dark"
+            data-cy="connexion-title"
+          >
+            Connectez-vous
+          </h2>
+          <form onSubmit={handleSubmit} noValidate>
+            <div className="mb-4 text-sm lg:text-base">
+              <Input
+                label="Email"
+                type="email"
+                placeholder="email@email.com"
+                value={email}
+                onChange={setEmail}
+                required={true}
+              />
+              {errors.email && <Error title="Erreur" text={errors.email} />}
             </div>
+            <div className="mb-6 text-sm lg:text-base">
+              <Input
+                label="Mot de passe"
+                type="password"
+                placeholder="********"
+                value={password}
+                onChange={setPassword}
+                required={true}
+              />
+              {errors.password && (
+                <Error title="Erreur" text={errors.password} />
+              )}
+            </div>
+            <div className="mt-5 mb-5">
+              <a
+                href="/register"
+                className="text sm text-green-dark text-decoration-line: underline text-sm lg:text-base"
+              >
+                Pas encore inscrit ? Créer un compte
+              </a>
+            </div>
+            {error && <Error title="Erreur" text={error} />}
+            <div className="flex items-center justify-center">
+              <Button
+                text="Connexion"
+                type="submit"
+                className="bg-green-light hover:bg-beige hover:text-green-light text-beige font-bold text-sm lg:text-base"
+              />
+            </div>
+          </form>
         </div>
-    );
+      </div>
+    </div>
+  );
 }

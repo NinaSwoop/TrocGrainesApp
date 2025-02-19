@@ -1,88 +1,149 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface AuthContextType {
-    user: { email: string; roles: string[]; id: number; point_balance: number; username: string; picture: string | null; createdAt: string} | null;
-    login: (email: string, password: string) => Promise<void>;
-    logout: () => Promise<void>;
-    register: (username: string, firstname: string, lastname: string, email: string, birthdate: string, pictureUrl: string | null, password: string) => Promise<void>;
+  user: {
+    email: string;
+    roles: string[];
+    id: number;
+    point_balance: number;
+    username: string;
+    picture: string | null;
+    createdAt: string;
+  } | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  register: (
+    username: string,
+    firstname: string,
+    lastname: string,
+    email: string,
+    birthdate: string,
+    pictureUrl: string | null,
+    password: string,
+  ) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType>({
-    user: null,
-    login: async () => { },
-    logout: async () => { },
-    register: async () => { }
+  user: null,
+  login: async () => {},
+  logout: async () => {},
+  register: async () => {},
 });
 
 interface AuthProviderProps {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 export const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (context === undefined) {
-        throw new Error("useAuth must be used within an AuthProvider");
-    }
-    return context;
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-    const [user, setUser] = useState<{ email: string; roles: string[], id: number; point_balance: number; username: string; picture: string; createdAt: string } | null>(null);
+  const [user, setUser] = useState<{
+    email: string;
+    roles: string[];
+    id: number;
+    point_balance: number;
+    username: string;
+    picture: string;
+    createdAt: string;
+  } | null>(null);
 
-    useEffect(() => {
-        fetch("http://localhost/api/auth/auth_user", {
-            method: "GET",
-            credentials: "include",
-        })
-            .then(res => res.ok ? res.json() : null)
-            .then(data => {
-                if (data) {
-                    setUser({ email: data.email, roles: data.roles, id: data.id, point_balance: data.point_balance, username: data.username, picture: data.picture, createdAt: data.createdAt });
-                }
-            })
-            .catch(() => setUser(null));
-    }, []);
-
-    const login = async (email: string, password: string) => {
-        const res = await fetch("http://localhost/api/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({ security: { credentials: { email, password } } })
-        });
-
-        if (res.ok) {
-            const data = await res.json();
-            setUser({ email: data.email, roles: data.roles, id: data.id, point_balance: data.point_balance, username: data.username, picture: data.picture, createdAt: data.createdAt });
-        } else {
-            throw new Error("Échec de l'authentification");
+  useEffect(() => {
+    fetch("http://localhost/api/auth/auth_user", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data) {
+          setUser({
+            email: data.email,
+            roles: data.roles,
+            id: data.id,
+            point_balance: data.point_balance,
+            username: data.username,
+            picture: data.picture,
+            createdAt: data.createdAt,
+          });
         }
-    };
+      })
+      .catch(() => setUser(null));
+  }, []);
 
-    const logout = async () => {
-        await fetch("http://localhost/api/auth/logout", {
-            method: "POST",
-            credentials: "include"
-        });
-        setUser(null);
-    };
+  const login = async (email: string, password: string) => {
+    const res = await fetch("http://localhost/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ security: { credentials: { email, password } } }),
+    });
 
-    const register = async (username: string, firstname: string, lastname: string, email: string, birthdate: string, pictureUrl: string | null, password: string) => {
-        const res = await fetch("http://localhost/api/auth/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, firstname, lastname, email, birthdate, pictureUrl, password })
-        });
+    if (res.ok) {
+      const data = await res.json();
+      setUser({
+        email: data.email,
+        roles: data.roles,
+        id: data.id,
+        point_balance: data.point_balance,
+        username: data.username,
+        picture: data.picture,
+        createdAt: data.createdAt,
+      });
+    } else {
+      throw new Error("Échec de l'authentification");
+    }
+  };
 
-        if (!res.ok) {
-            throw new Error("Échec de l'inscription");
-        }
-    };
+  const logout = async () => {
+    await fetch("http://localhost/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+    setUser(null);
+  };
 
+  const register = async (
+    username: string,
+    firstname: string,
+    lastname: string,
+    email: string,
+    birthdate: string,
+    pictureUrl: string | null,
+    password: string,
+  ) => {
+    const res = await fetch("http://localhost/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username,
+        firstname,
+        lastname,
+        email,
+        birthdate,
+        pictureUrl,
+        password,
+      }),
+    });
 
-    return (
-        <AuthContext.Provider value={{ user, login, logout, register }}>
-            {children}
-        </AuthContext.Provider>
-    );
+    if (!res.ok) {
+      throw new Error("Échec de l'inscription");
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, logout, register }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
